@@ -11,7 +11,8 @@ using namespace std;
 class MailManager {
 private:
     // Propiedades y metodos privados de la clase
-
+    int sizeTablaMails;
+    email* tablaMails;
 public:
     MailManager();
 
@@ -29,6 +30,10 @@ public:
     vector<email> getByFrom(string from);
 
     vector<email> getByQuery(string query);
+
+    void setTablaMails(email* m, int n);
+
+    email* getTablaMails(int n);
 };
 
 

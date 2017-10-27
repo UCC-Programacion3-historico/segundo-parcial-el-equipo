@@ -4,7 +4,24 @@
  * Constructor
  */
 MailManager::MailManager() {
+    FILE* archivo = NULL;
+    int largo;
 
+    archivo = fopen("../Other Files/DBmails.txt","r");
+    if (archivo == NULL) {
+        throw 1;
+    }
+    fscanf(archivo," %d[^\n]",&largo);
+    tablaMails = new email[largo];
+    for(int i; i < largo; i++) {
+        fscanf(archivo, "%d[^\n]",&tablaMails[i].id);
+        fscanf(archivo, "%s[^\n]",&tablaMails[i].from);
+        fscanf(archivo, "%s[^\n]",&tablaMails[i].to);
+        fscanf(archivo, "%s[^\n]",&tablaMails[i].date);
+        fscanf(archivo, "%s[^\n]",&tablaMails[i].subject);
+        fscanf(archivo, "%s[^\n]",&tablaMails[i].content);
+        fgetc(archivo);
+    }
 }
 
 
@@ -79,4 +96,12 @@ vector<email> MailManager::getByFrom(string from) {
 vector<email> MailManager::getByQuery(string query) {
     vector<email> ret;
     return ret;
+}
+
+void setTablaMails(email* m, int n) {
+    tablaMails[n]
+}
+
+email* getTablaMails(int n) {
+
 }
