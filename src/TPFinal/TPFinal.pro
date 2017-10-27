@@ -27,12 +27,15 @@ SOURCES += \
         main.cpp \
         mainwindow.cpp \
     email.cpp \
-    MailManager.cpp
+    MailManager.cpp \
+    addmaildialog.cpp
 
 HEADERS += \
         mainwindow.h \
     email.h \
-    MailManager.h
+    MailManager.h \
+    addmaildialog.h
 
 FORMS += \
-        mainwindow.ui
+        mainwindow.ui \
+    addmaildialog.ui
