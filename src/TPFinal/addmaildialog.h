@@ -15,6 +15,9 @@ public:
     explicit AddMailDialog(QWidget *parent = 0);
     ~AddMailDialog();
 
+private slots:
+    void on_buttonBox_accepted();
+
 private:
     Ui::AddMailDialog *ui;
 };

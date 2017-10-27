@@ -12,3 +12,8 @@ AddMailDialog::~AddMailDialog()
 {
     delete ui;
 }
+
+void AddMailDialog::on_buttonBox_accepted()
+{
+
+}

@@ -20,3 +20,8 @@ void MainWindow::on_pushButton_clicked()
     addMailDialog.setModal(true);
     addMailDialog.exec();
 }
+
+void MainWindow::on_pushButton_2_clicked()
+{
+    ui->searchLineEdit->setText("Deberia buscar");
+}
