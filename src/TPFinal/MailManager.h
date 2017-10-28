@@ -34,10 +34,9 @@ public:
 
     vector<email> getByQuery(string query);
 
-    void setTablaMails(email* m, int n);
-
     email* getTablaMails(int n);
-};
 
+    void initTablaMails();
+};
 
 #endif // MAILMANAGER_H
