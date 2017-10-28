@@ -1,8 +1,15 @@
-1
+2
 1
 Juan
 Yo
 2017 10 27
 Me llamo pedro
 Hola juan me llamo pedro y soy una caca.
+
+2
+Yo
+Roberto
+2017 10 28
+Ahora si soy pedro
+Cuando me fui de casa no podria creer lo que habia en ese lugar.
 

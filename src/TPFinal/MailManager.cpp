@@ -7,21 +7,42 @@ MailManager::MailManager() {
     FILE* archivo = NULL;
     int largo;
 
-    archivo = fopen("../Other Files/DBmails.txt","r");
+    archivo = fopen("../TPFinal/DBmails.txt","r");
     if (archivo == NULL) {
         throw 1;
     }
-    fscanf(archivo," %d[^\n]",&largo);
+    fscanf(archivo," %d",&largo);
+    sizeTablaMails = largo;
+
     tablaMails = new email[largo];
     for(int i; i < largo; i++) {
-        fscanf(archivo, "%d[^\n]",&tablaMails[i].id);
-        fscanf(archivo, "%s[^\n]",&tablaMails[i].from);
-        fscanf(archivo, "%s[^\n]",&tablaMails[i].to);
-        fscanf(archivo, "%s[^\n]",&tablaMails[i].date);
-        fscanf(archivo, "%s[^\n]",&tablaMails[i].subject);
-        fscanf(archivo, "%s[^\n]",&tablaMails[i].content);
+        fscanf(archivo, " %d",&tablaMails[i].id);
+        fgetc(archivo); //Para eliminar el \n
+
+        tablaMails[i].from = new char[20];
+        tablaMails[i].to = new char[20];
+        tablaMails[i].date = new char[20];
+        tablaMails[i].subject = new char[30];
+        tablaMails[i].content = new char[250];
+
+        if (fgets(tablaMails[i].from,20,archivo) != NULL) {
+            puts(tablaMails[i].from);
+        }
+        if (fgets(tablaMails[i].to,20,archivo) != NULL) {
+            puts(tablaMails[i].to);
+        }
+        if (fgets(tablaMails[i].date,20,archivo) != NULL) {
+            puts(tablaMails[i].date);
+        }
+        if (fgets(tablaMails[i].subject,30,archivo) != NULL) {
+            puts(tablaMails[i].subject);
+        }
+        if (fgets(tablaMails[i].content,250,archivo) != NULL) {
+            puts(tablaMails[i].content);
+        }
         fgetc(archivo);
     }
+    fclose(archivo);
 }
 
 
@@ -98,10 +119,16 @@ vector<email> MailManager::getByQuery(string query) {
     return ret;
 }
 
-void setTablaMails(email* m, int n) {
-    tablaMails[n]
+void MailManager::setTablaMails(email* m, int n) {
+    if(n > sizeTablaMails) {
+        throw 1;
+    }
+    tablaMails[n] = *m;
 }
 
-email* getTablaMails(int n) {
-
+email* MailManager::getTablaMails(int n) {
+    if(n > sizeTablaMails) {
+        throw 1;
+    }
+    return &tablaMails[n];
 }

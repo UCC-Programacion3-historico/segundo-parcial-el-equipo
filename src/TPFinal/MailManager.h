@@ -5,15 +5,18 @@
 #ifndef MAILMANAGER_H
 #define MAILMANAGER_H
 
+#include <stdio.h>
+
 using namespace std;
 
 
 class MailManager {
 private:
     // Propiedades y metodos privados de la clase
-    int sizeTablaMails;
+
     email* tablaMails;
 public:
+    int sizeTablaMails;
     MailManager();
 
     // Métodos de uso
