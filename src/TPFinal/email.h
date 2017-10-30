@@ -18,6 +18,8 @@ public:
     char* content;
 
     email &operator = (const email &c);
+
+    unsigned long getDateScore();
 };
 
 

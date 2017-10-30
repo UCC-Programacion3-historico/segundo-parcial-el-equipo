@@ -1,15 +1,49 @@
-2
+7
 1
 Juan
 Yo
-2017 10 27
+2017 10 29
 Me llamo pedro
 Hola juan me llamo pedro y soy una caca.
 
 2
-Yo
+Alberos
 Roberto
 2017 10 28
 Ahora si soy pedro
 Cuando me fui de casa no podria creer lo que habia en ese lugar.
 
+3
+Ricardo
+Pablito
+2017 10 30
+No puedo mas con eso
+Llegue corriendo y me salto un lagrto gigante.
+
+4
+Yo
+Algonso
+2016 10 31
+Hola pedro suempre tan con.
+Que locura que fue llegar a este lugar endemoniado.
+
+5
+Yo
+Algonso
+2017 10 25
+Hola pedro suempre tan con.
+Que locura que fue llegar a este lugar endemoniado.
+
+6
+Yo
+Algonso
+2017 10 27
+Hola pedro suempre tan con.
+Que locura que fue llegar a este lugar endemoniado.
+
+7
+Ricardo
+Pablito
+2017 10 30
+No puedo mas con eso
+Llegue corriendo y me salto un lagrto gigante que locoooo.

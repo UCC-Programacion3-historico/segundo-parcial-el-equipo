@@ -2,7 +2,7 @@
 #include "ui_mainwindow.h"
 
 MailManager* MM;
-
+int cont=0;
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
@@ -25,18 +25,22 @@ MainWindow::~MainWindow()
 
 void MainWindow::on_pushButton_clicked()
 {
-    ui->label->setText(MM->getTablaMails(0)->from);
-    ui->label_2->setText(MM->getTablaMails(0)->to);
-    ui->label_3->setText(MM->getTablaMails(0)->date);
-    ui->label_4->setText(MM->getTablaMails(0)->subject);
-    ui->label_5->setText(MM->getTablaMails(0)->content);
+    ui->label->setText(MM->getTablaOrdenadaFrom(cont)->from);
+    ui->label_2->setText(MM->getTablaOrdenadaFrom(cont)->to);
+    ui->label_3->setText(MM->getTablaOrdenadaFrom(cont)->date);
+    ui->label_4->setText(MM->getTablaOrdenadaFrom(cont)->subject);
+    ui->label_5->setText(MM->getTablaOrdenadaFrom(cont)->content);
+    cont++;
+    if(cont>6){cont = 6;}
 }
 
 void MainWindow::on_pushButton_2_clicked()
 {
-    ui->label->setText(MM->getTablaMails(1)->from);
-    ui->label_2->setText(MM->getTablaMails(1)->to);
-    ui->label_3->setText(MM->getTablaMails(1)->date);
-    ui->label_4->setText(MM->getTablaMails(1)->subject);
-    ui->label_5->setText(MM->getTablaMails(1)->content);
+    ui->label->setText(MM->getTablaOrdenadaFrom(cont)->from);
+    ui->label_2->setText(MM->getTablaOrdenadaFrom(cont)->to);
+    ui->label_3->setText(MM->getTablaOrdenadaFrom(cont)->date);
+    ui->label_4->setText(MM->getTablaOrdenadaFrom(cont)->subject);
+    ui->label_5->setText(MM->getTablaOrdenadaFrom(cont)->content);
+    cont--;
+    if(cont<0){cont = 0;}
 }

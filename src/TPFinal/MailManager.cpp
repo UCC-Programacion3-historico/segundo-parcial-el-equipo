@@ -4,11 +4,13 @@
  * Constructor
  *
  * Primero abre la DB y carga la tablaMails
+ * Despues los ordena y crea las tablas
  *
  */
 MailManager::MailManager() {
     //Valores iniciales
     tablaMails = NULL;
+    listaNuevos = NULL;
     sizeTablaMails = 0;
 
     try {
@@ -27,6 +29,13 @@ MailManager::MailManager() {
             puts("Error en el archivo DBmails.txt al leer. El programa va a cerrarse.");
             exit(0);
         }
+    }
+
+    try {
+        initTablasOrdenadas();
+    }
+    catch (int e) {
+
     }
 }
 
@@ -115,6 +124,17 @@ email* MailManager::getTablaMails(int n) {
     }
     return &tablaMails[n];
 }
+/**
+ * devvuelve el mail de la posicion n de la tabla ordenada por fecha
+ * @param n Indice del mail que se quiere buscar
+ * @return Puntero del mail en la tabla
+ */
+email* MailManager::getTablaOrdenadaDate(int n) {
+    if(n > sizeTablaMails) {
+        throw 1;
+    }
+    return tablaOrdenadaDate[n];
+}
 
 /**
  * Crea la tabla de mails y la llena con los datos del archivo
@@ -145,7 +165,7 @@ void MailManager::initTablaMails() {
         throw 2;
     }
 
-    for(int i; i < largo; i++) {
+    for(int i=0; i < largo; i++) {
 
         //Lectura de ID
         if (fscanf(archivo, " %d",&tablaMails[i].id) < 1) throw 3;
@@ -172,3 +192,242 @@ void MailManager::initTablaMails() {
     }
     fclose(archivo);
 }
+
+/**
+ * Ordena la tablaMails en dos tablas de punteros.
+ */
+void MailManager::initTablasOrdenadas() {
+    tablaOrdenadaDate = new email*[sizeTablaMails];
+    tablaOrdenadaFrom = new email*[sizeTablaMails];
+
+    for(int i=0; i < sizeTablaMails; i++) {
+        tablaOrdenadaFrom[i] = &tablaMails[i];
+        tablaOrdenadaDate[i] = &tablaMails[i];
+    }
+
+    QuickSortDate(tablaOrdenadaDate,0,sizeTablaMails-1);
+    QuickSortFrom(tablaOrdenadaFrom,0,sizeTablaMails-1);
+}
+
+/**
+ * Funcion implementa el algoritmo Quicksort para ordenar por fecha los mails en una tabla
+ * @param A tabla para ordenar los mails por fecha
+ * @param inicio posicion de la tabla de inicio
+ * @param fin posicion de la tabla final
+ */
+void MailManager::QuickSortDate(email** A,unsigned long inicio,unsigned long fin) {
+    if(inicio < fin) {
+        int pivot;
+        pivot = crearPivotDate(A,inicio,fin);
+        if(pivot != 0){
+            QuickSortDate(A,inicio,pivot-1);
+        }
+        QuickSortDate(A,pivot+1,fin);
+    }
+}
+/**
+ * Selecciona un valor de la tabla para que sea el pivot.
+ *
+ *  -Se selecciona como pivot un valor medio entre el inicio, el fin y el valor del medio
+ *
+ * @param A tabla para ordenar los mails por fecha
+ * @param inicio posicion de la tabla inicio
+ * @param fin posicion de la tabla final
+ * @return devuelve una posicion de memoria que es el pivot
+ */
+int MailManager::crearPivotDate(email** A,unsigned long inicio,unsigned long fin) {
+    unsigned long a = inicio + ((fin-inicio)/2); //Posicion del medio
+    unsigned long aux;
+
+    //Seleccion del mejor pivot
+    if(A[inicio]->getDateScore() < A[a]->getDateScore()){
+        if(A[inicio]->getDateScore() < A[fin]->getDateScore()) {
+            if(A[fin]->getDateScore() < A[a]->getDateScore()) {
+                aux = fin;
+            }else{
+                aux = a;
+            }
+        }else{
+            aux = inicio;
+        }
+    }else{
+        if(A[inicio]->getDateScore() < A[fin]->getDateScore()){
+            aux = inicio;
+        }else{
+            if(A[fin]->getDateScore() < A[a]->getDateScore()){
+                aux = a;
+            }else{
+                aux = fin;
+            }
+        }
+    }
+
+    unsigned long pivot = A[aux]->getDateScore();
+    int i = (inicio - 1);
+    email *tmp;
+
+    for(int j = inicio; j < aux;j++) {
+        if (A[j]->getDateScore() <= pivot) {
+            i++;
+            //Switch
+            tmp = A[i];
+            A[i] = A[j];
+            A[j] = tmp;
+        }
+    }
+    //Switch
+    tmp = A[i+1];
+    A[i+1] = A[aux];
+    A[aux] = tmp;
+
+    aux = i+1; //Actualizo la posicion del aux
+    i = fin+1; //El i ahora va del final y decrece
+    for(int j = fin;j > aux;j--) {
+        if(A[j]->getDateScore() > pivot) {
+            i--;
+            //Switch
+            tmp = A[i];
+            A[i] = A[j];
+            A[j] = tmp;
+        }
+    }
+    //Switch
+    tmp = A[i-1];
+    A[i-1] = A[aux];
+    A[aux] = tmp;
+
+    return (i-1);
+}
+
+/**
+ * devuelve el mail de la posicion n de la tabla ordenada por remitente
+ * @param n Indice del mail que se quiere buscar
+ * @return Puntero del mail en la tabla
+ */
+email* MailManager::getTablaOrdenadaFrom(int n) {
+    if(n > sizeTablaMails) {
+        throw 1;
+    }
+    return tablaOrdenadaFrom[n];
+}
+
+/**
+ * Funcion implementa el algoritmo Quicksort para ordenar por remitente los mails en una tabla
+ * @param A tabla para ordenar los mails por remitente
+ * @param inicio posicion de la tabla de inicio
+ * @param fin posicion de la tabla final
+ */
+void MailManager::QuickSortFrom(email** A,unsigned long inicio,unsigned long fin) {
+    if(inicio < fin) {
+        int pivot;
+        pivot = crearPivotFrom(A,inicio,fin);
+        if(pivot != 0){
+            QuickSortFrom(A,inicio,pivot-1);
+        }
+        QuickSortFrom(A,pivot+1,fin);
+    }
+}
+
+/**
+ * Selecciona un valor de la tabla para que sea el pivot.
+ *
+ *  -Se selecciona como pivot un valor medio entre el inicio, el fin y el valor del medio
+ *
+ * @param A tabla para ordenar los mails por remitente
+ * @param inicio posicion de la tabla inicio
+ * @param fin posicion de la tabla final
+ * @return devuelve una posicion de memoria que es el pivot
+ */
+int MailManager::crearPivotFrom(email** A,unsigned long inicio,unsigned long fin) {
+    unsigned long a = inicio + ((fin-inicio)/2); //Posicion del medio
+    unsigned long aux;
+
+    //Seleccion del mejor pivot
+    if(compareMailsFrom(A[a],A[inicio]) == 0) {
+        if(compareMailsFrom(A[fin],A[inicio]) == 0) {
+            if(compareMailsFrom(A[fin],A[a]) == 0) {
+                aux = a;
+            }else{
+                aux = fin;
+            }
+        }else{
+            aux = inicio;
+        }
+    }else{
+        if(compareMailsFrom(A[fin],A[inicio]) == 0) {
+            aux = inicio;
+        }else{
+            if(compareMailsFrom(A[a],A[fin]) == 0) {
+                aux = a;
+            }else{
+                aux = fin;
+            }
+        }
+    }
+
+    int i = (inicio - 1);
+    email *tmp;
+
+    for(int j = inicio; j < aux;j++) {
+        if (compareMailsFrom(A[j],A[aux]) < 2) {
+            i++;
+            //Switch
+            tmp = A[i];
+            A[i] = A[j];
+            A[j] = tmp;
+        }
+    }
+    //Switch
+    tmp = A[i+1];
+    A[i+1] = A[aux];
+    A[aux] = tmp;
+
+    aux = i+1; //Actualizo la posicion del aux
+    i = fin+1; //El i ahora va del final y decrece
+    for(int j = fin;j > aux;j--) {
+        if(compareMailsFrom(A[j],A[aux]) == 2) {
+            i--;
+            //Switch
+            tmp = A[i];
+            A[i] = A[j];
+            A[j] = tmp;
+        }
+    }
+    //Switch
+    tmp = A[i-1];
+    A[i-1] = A[aux];
+    A[aux] = tmp;
+
+    return (i-1);
+}
+
+/**
+ * Funcion para comparar dos mails por remitente
+ *
+ * @param A
+ * @param B
+ * @return Devuelve:
+ *  0 si A < B
+ *  1 Si A = B
+ *  2 si A > B
+ */
+int MailManager::compareMailsFrom(email* A, email* B) {
+    int i = 0;
+    do {
+        if(A->from[i] < B->from[i]) {
+            return 0;
+        }
+        if(B->from[i] < A->from[i]) {
+            return 2;
+        }
+        i++;
+    } while(A->from[i] != '\0' && B->from[i] != '\0');
+    if(A->from[i] = '\0') {
+        if(B->from[i] = '\0') {
+            return 1;
+        }
+        return 0;
+    }
+    return 2;
+}
+
