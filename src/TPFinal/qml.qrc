@@ -1,0 +1,9 @@
+<RCC>
+    <qresource prefix="/">
+        <file>main.qml</file>
+        <file>img/ic_close_lightblue_24px.svg</file>
+        <file>img/ic_close_red_24px.svg</file>
+        <file>img/search-icon.png</file>
+        <file>main.cpp</file>
+    </qresource>
+</RCC>
