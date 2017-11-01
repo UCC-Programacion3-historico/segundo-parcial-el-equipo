@@ -11,11 +11,24 @@ using namespace std;
 class email {
 public:
     unsigned long id;
-    string from;
-    string to;
-    string date;
-    string subject;
-    string content;
+    char* from;
+    char* to;
+    char* date;
+    char* subject;
+    char* content;
+
+    email &operator = (const email &c);
+
+    int compareMailsFrom(email *B);
+
+    unsigned long getDateScore();
+
+    email* izq = NULL;
+    email* der = NULL;
+
+    void put(email nuevo);
+    email* getFirst(email* root);
+    email* get();
 };
 
 

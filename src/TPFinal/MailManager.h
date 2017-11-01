@@ -1,16 +1,22 @@
 #include <string>
 #include <vector>
+#include <math.h>
 #include "email.h"
 
 #ifndef MAILMANAGER_H
 #define MAILMANAGER_H
 
+#include <stdio.h>
+
+#include "arbolmail.h"
 using namespace std;
 
 
 class MailManager {
 private:
     // Propiedades y metodos privados de la clase
+    arbolMail arbolDate;
+    arbolMail arbolFrom;
 
 public:
     MailManager();
@@ -29,7 +35,23 @@ public:
     vector<email> getByFrom(string from);
 
     vector<email> getByQuery(string query);
-};
 
+    email* getTablaMails(int n);
+
+    email* getTablaOrdenadaDate(int n);
+    email* getTablaOrdenadaFrom(int n);
+
+    int compareMailsFrom(email* A, email* B);
+
+    void initTablaMails();
+
+    void initTablasOrdenadas();
+
+    void QuickSortDate(email** A,unsigned long inicio,unsigned long fin);
+    int crearPivotDate(email** A,unsigned long inicio,unsigned long fin);
+
+    void QuickSortFrom(email** A,unsigned long inicio,unsigned long fin);
+    int crearPivotFrom(email** A,unsigned long inicio,unsigned long fin);
+};
 
 #endif // MAILMANAGER_H

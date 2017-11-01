@@ -28,14 +28,19 @@ SOURCES += \
         mainwindow.cpp \
     email.cpp \
     MailManager.cpp \
+    arbolmail.cpp \
     addmaildialog.cpp
 
 HEADERS += \
         mainwindow.h \
     email.h \
     MailManager.h \
-    addmaildialog.h
+    addmaildialog.h \
+    arbolmail.h
 
 FORMS += \
         mainwindow.ui \
     addmaildialog.ui
+
+DISTFILES += \
+    DBmails.txt
