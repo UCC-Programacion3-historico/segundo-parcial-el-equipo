@@ -1,8 +1,7 @@
-#include <string>
-
 #ifndef EMAIL_H
 #define EMAIL_H
-
+#include <string>
+#include <vector>
 using namespace std;
 
 /**
@@ -11,11 +10,11 @@ using namespace std;
 class email {
 public:
     unsigned long id;
-    char* from;
-    char* to;
-    char* date;
-    char* subject;
-    char* content;
+    string from;
+    string to;
+    string date;
+    string subject;
+    string content;
 
     email &operator = (const email &c);
 

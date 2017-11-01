@@ -18,7 +18,7 @@ nodoMail* arbolMail::put(email n,int modo) {
 
 void arbolMail::put(nodoMail* n,int modo) {
     if (raiz == NULL) {
-        raiz = n;
+        raiz = new nodoMail(n->getMail());
         return;
     }
     raiz->put(n,modo);
@@ -33,13 +33,19 @@ bool arbolMail::esVacio() {
     return 0;
 }
 
-void arbolMail::print() {
-    //Implementar para mostrar el mail en la interfaz grafica
+void arbolMail::getAll(vector<email> *A) {
+    if(raiz == NULL) {
+        A->clear();
+        return;
+    }
+    raiz->getAll(A);
 }
+
+
 
 nodoMail* nodoMail::put(email n,int modo) {
     if(modo == 0) {
-        if(n.getDateScore() < mail.getDateScore()) {
+        if(n.getDateScore() < this->mail->getDateScore()) {
             if(izq != NULL) {
                 return izq->put(n,modo);
             }
@@ -52,7 +58,7 @@ nodoMail* nodoMail::put(email n,int modo) {
         der = new nodoMail(n);
         return der;
     }
-    if(n.compareMailsFrom(&mail) < 1) {
+    if(n.compareMailsFrom(mail) < 1) {
         if(izq != NULL) {
             return izq->put(n,modo);
         }
@@ -68,36 +74,42 @@ nodoMail* nodoMail::put(email n,int modo) {
 
 void nodoMail::put(nodoMail* n,int modo) {
     if(modo == 0) {
-        if(n->getMail().getDateScore() < mail.getDateScore()) {
+        if(n->getMail().getDateScore() < mail->getDateScore()) {
             if(izq != NULL) {
                 izq->put(n,modo);
                 return;
             }
-            izq = n;
+            izq = new nodoMail(n->getMail());
             return;
         }
         if(der != NULL) {
             der->put(n,modo);
             return;
         }
-        der = n;
+        der = new nodoMail(n->getMail());
         return;
     }
-    if(n->getMail().compareMailsFrom(&mail) < 1) {
+    if(n->getMail().compareMailsFrom(mail) < 1) {
         if(izq != NULL) {
             izq->put(n,modo);
             return;
         }
-        izq = n;
+        izq = new nodoMail(n->getMail());
         return;
     }
     if(der != NULL) {
         der->put(n,modo);
         return;
     }
-    der = n;
+    der = new nodoMail(n->getMail());
 }
 
-void nodoMail::print() {
-
+void nodoMail::getAll(vector<email> *A) {
+    if(izq != NULL) {
+        izq->getAll(A);
+    }
+    A->push_back(this->getMail());
+    if(der != NULL) {
+        der->getAll(A);
+    }
 }

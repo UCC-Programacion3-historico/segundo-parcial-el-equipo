@@ -6,14 +6,53 @@
    <rect>
     <x>0</x>
     <y>0</y>
+<<<<<<< HEAD
+    <width>691</width>
+    <height>624</height>
+=======
     <width>597</width>
     <height>482</height>
+>>>>>>> rodri
    </rect>
   </property>
   <property name="windowTitle">
    <string>MainWindow</string>
   </property>
   <widget class="QWidget" name="centralWidget">
+<<<<<<< HEAD
+   <widget class="QLineEdit" name="lineEdit">
+    <property name="geometry">
+     <rect>
+      <x>90</x>
+      <y>10</y>
+      <width>451</width>
+      <height>31</height>
+     </rect>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="pushButton">
+    <property name="geometry">
+     <rect>
+      <x>20</x>
+      <y>10</y>
+      <width>51</width>
+      <height>41</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>+</string>
+    </property>
+   </widget>
+   <widget class="QListWidget" name="listWidget">
+    <property name="geometry">
+     <rect>
+      <x>20</x>
+      <y>70</y>
+      <width>651</width>
+      <height>481</height>
+     </rect>
+    </property>
+=======
    <widget class="QPushButton" name="pushButton">
     <property name="geometry">
      <rect>
@@ -142,10 +181,10 @@
      </rect>
     </property>
    </widget>
-   <widget class="QLabel" name="from_1">
+   <widget class="QLabel" name="label_6">
     <property name="geometry">
      <rect>
-      <x>220</x>
+      <x>230</x>
       <y>20</y>
       <width>81</width>
       <height>31</height>
@@ -155,10 +194,10 @@
      <string>From</string>
     </property>
    </widget>
-   <widget class="QLabel" name="to_1">
+   <widget class="QLabel" name="label_7">
     <property name="geometry">
      <rect>
-      <x>320</x>
+      <x>330</x>
       <y>20</y>
       <width>81</width>
       <height>31</height>
@@ -168,7 +207,7 @@
      <string>From</string>
     </property>
    </widget>
-   <widget class="QLabel" name="date_1">
+   <widget class="QLabel" name="label_8">
     <property name="geometry">
      <rect>
       <x>420</x>
@@ -181,7 +220,7 @@
      <string>From</string>
     </property>
    </widget>
-   <widget class="QLabel" name="subject_1">
+   <widget class="QLabel" name="label_9">
     <property name="geometry">
      <rect>
       <x>510</x>
@@ -193,174 +232,43 @@
     <property name="text">
      <string>From</string>
     </property>
+>>>>>>> rodri
    </widget>
-   <widget class="QPushButton" name="act_button">
+   <widget class="QPushButton" name="pushButton_2">
     <property name="geometry">
      <rect>
-      <x>230</x>
-      <y>300</y>
+<<<<<<< HEAD
+      <x>550</x>
+      <y>10</y>
+      <width>113</width>
+      <height>32</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Buscar</string>
+=======
+      <x>370</x>
+      <y>100</y>
       <width>80</width>
       <height>31</height>
      </rect>
     </property>
     <property name="text">
-     <string>Actualizar</string>
+     <string>Siguiente</string>
     </property>
    </widget>
-   <widget class="QLabel" name="from_2">
+   <widget class="QPushButton" name="pushButton_3">
     <property name="geometry">
      <rect>
-      <x>220</x>
-      <y>80</y>
-      <width>81</width>
+      <x>230</x>
+      <y>100</y>
+      <width>80</width>
       <height>31</height>
      </rect>
     </property>
     <property name="text">
-     <string>From</string>
-    </property>
-   </widget>
-   <widget class="QLabel" name="to_2">
-    <property name="geometry">
-     <rect>
-      <x>320</x>
-      <y>80</y>
-      <width>81</width>
-      <height>31</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>From</string>
-    </property>
-   </widget>
-   <widget class="QLabel" name="date_2">
-    <property name="geometry">
-     <rect>
-      <x>420</x>
-      <y>80</y>
-      <width>81</width>
-      <height>31</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>From</string>
-    </property>
-   </widget>
-   <widget class="QLabel" name="subject_2">
-    <property name="geometry">
-     <rect>
-      <x>510</x>
-      <y>80</y>
-      <width>81</width>
-      <height>31</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>From</string>
-    </property>
-   </widget>
-   <widget class="QLabel" name="from_3">
-    <property name="geometry">
-     <rect>
-      <x>220</x>
-      <y>140</y>
-      <width>81</width>
-      <height>31</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>From</string>
-    </property>
-   </widget>
-   <widget class="QLabel" name="to_3">
-    <property name="geometry">
-     <rect>
-      <x>320</x>
-      <y>140</y>
-      <width>81</width>
-      <height>31</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>From</string>
-    </property>
-   </widget>
-   <widget class="QLabel" name="date_3">
-    <property name="geometry">
-     <rect>
-      <x>420</x>
-      <y>140</y>
-      <width>81</width>
-      <height>31</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>From</string>
-    </property>
-   </widget>
-   <widget class="QLabel" name="subject_3">
-    <property name="geometry">
-     <rect>
-      <x>510</x>
-      <y>140</y>
-      <width>81</width>
-      <height>31</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>From</string>
-    </property>
-   </widget>
-   <widget class="QLabel" name="from_4">
-    <property name="geometry">
-     <rect>
-      <x>220</x>
-      <y>200</y>
-      <width>81</width>
-      <height>31</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>From</string>
-    </property>
-   </widget>
-   <widget class="QLabel" name="to_4">
-    <property name="geometry">
-     <rect>
-      <x>320</x>
-      <y>200</y>
-      <width>81</width>
-      <height>31</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>From</string>
-    </property>
-   </widget>
-   <widget class="QLabel" name="date_4">
-    <property name="geometry">
-     <rect>
-      <x>420</x>
-      <y>200</y>
-      <width>81</width>
-      <height>31</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>From</string>
-    </property>
-   </widget>
-   <widget class="QLabel" name="subject_4">
-    <property name="geometry">
-     <rect>
-      <x>510</x>
-      <y>200</y>
-      <width>81</width>
-      <height>31</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>From</string>
+     <string>Anterior</string>
+>>>>>>> rodri
     </property>
    </widget>
   </widget>
@@ -369,8 +277,13 @@
     <rect>
      <x>0</x>
      <y>0</y>
+<<<<<<< HEAD
+     <width>691</width>
+     <height>22</height>
+=======
      <width>597</width>
      <height>17</height>
+>>>>>>> rodri
     </rect>
    </property>
   </widget>
