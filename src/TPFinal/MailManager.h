@@ -8,20 +8,17 @@
 
 #include <stdio.h>
 
+#include "arbolmail.h"
 using namespace std;
 
 
 class MailManager {
 private:
     // Propiedades y metodos privados de la clase
-    email* listaNuevos;
-    email* tablaMails;
+    arbolMail arbolDate;
+    arbolMail arbolFrom;
 
-    //Tablas ordenadas
-    email** tablaOrdenadaDate;
-    email** tablaOrdenadaFrom;
 public:
-    int sizeTablaMails;
     MailManager();
 
     // Métodos de uso

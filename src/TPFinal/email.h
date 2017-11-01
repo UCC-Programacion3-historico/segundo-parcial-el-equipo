@@ -19,7 +19,16 @@ public:
 
     email &operator = (const email &c);
 
+    int compareMailsFrom(email *B);
+
     unsigned long getDateScore();
+
+    email* izq = NULL;
+    email* der = NULL;
+
+    void put(email nuevo);
+    email* getFirst(email* root);
+    email* get();
 };
 
 

@@ -27,12 +27,14 @@ SOURCES += \
         main.cpp \
         mainwindow.cpp \
     email.cpp \
-    MailManager.cpp
+    MailManager.cpp \
+    arbolmail.cpp
 
 HEADERS += \
         mainwindow.h \
     email.h \
-    MailManager.h
+    MailManager.h \
+    arbolmail.h
 
 FORMS += \
         mainwindow.ui
