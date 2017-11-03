@@ -57,6 +57,7 @@ public:
     QLabel *to_4;
     QLabel *date_4;
     QLabel *subject_4;
+    QPushButton *pushButton_2;
     QMenuBar *menuBar;
     QToolBar *mainToolBar;
     QStatusBar *statusBar;
@@ -70,7 +71,7 @@ public:
         centralWidget->setObjectName(QStringLiteral("centralWidget"));
         pushButton = new QPushButton(centralWidget);
         pushButton->setObjectName(QStringLiteral("pushButton"));
-        pushButton->setGeometry(QRect(40, 300, 101, 31));
+        pushButton->setGeometry(QRect(20, 290, 101, 31));
         textEdit = new QTextEdit(centralWidget);
         textEdit->setObjectName(QStringLiteral("textEdit"));
         textEdit->setGeometry(QRect(10, 30, 161, 31));
@@ -115,7 +116,7 @@ public:
         subject_1->setGeometry(QRect(510, 20, 81, 31));
         act_button = new QPushButton(centralWidget);
         act_button->setObjectName(QStringLiteral("act_button"));
-        act_button->setGeometry(QRect(230, 300, 80, 31));
+        act_button->setGeometry(QRect(270, 290, 80, 31));
         from_2 = new QLabel(centralWidget);
         from_2->setObjectName(QStringLiteral("from_2"));
         from_2->setGeometry(QRect(220, 80, 81, 31));
@@ -152,6 +153,9 @@ public:
         subject_4 = new QLabel(centralWidget);
         subject_4->setObjectName(QStringLiteral("subject_4"));
         subject_4->setGeometry(QRect(510, 200, 81, 31));
+        pushButton_2 = new QPushButton(centralWidget);
+        pushButton_2->setObjectName(QStringLiteral("pushButton_2"));
+        pushButton_2->setGeometry(QRect(380, 290, 81, 31));
         MainWindow->setCentralWidget(centralWidget);
         menuBar = new QMenuBar(MainWindow);
         menuBar->setObjectName(QStringLiteral("menuBar"));
@@ -195,6 +199,7 @@ public:
         to_4->setText(QApplication::translate("MainWindow", "From", Q_NULLPTR));
         date_4->setText(QApplication::translate("MainWindow", "From", Q_NULLPTR));
         subject_4->setText(QApplication::translate("MainWindow", "From", Q_NULLPTR));
+        pushButton_2->setText(QApplication::translate("MainWindow", "Delete", Q_NULLPTR));
     } // retranslateUi
 
 };

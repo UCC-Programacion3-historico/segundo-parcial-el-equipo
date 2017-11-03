@@ -17,6 +17,7 @@ private:
     // Propiedades y metodos privados de la clase
     arbolMail arbolDate;
     arbolMail arbolFrom;
+    arbolMail arbolId;
 
 public:
     MailManager();
