@@ -29,14 +29,18 @@ SOURCES += \
     email.cpp \
     MailManager.cpp \
     arbolmail.cpp \
-    addmaildialog.cpp
+    addmaildialog.cpp \
+    arbolpalabras.cpp \
+    tablapalabras.cpp
 
 HEADERS += \
         mainwindow.h \
     email.h \
     MailManager.h \
     addmaildialog.h \
-    arbolmail.h
+    arbolmail.h \
+    arbolpalabras.h \
+    tablapalabras.h
 
 FORMS += \
         mainwindow.ui \

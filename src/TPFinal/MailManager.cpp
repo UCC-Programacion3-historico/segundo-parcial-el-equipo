@@ -3,9 +3,6 @@
 /**
  * Constructor
  *
- * Primero abre la DB y carga la tablaMails
- * Despues los ordena y crea las tablas
- *
  */
 MailManager::MailManager() {
 
@@ -17,7 +14,7 @@ MailManager::MailManager() {
  * @param m mail a agregar
  */
 void MailManager::addMail(email m) {
-    arbolFrom.put(arbolDate.put(arbolId.put(m,2),0),1);
+    tabla.add(arbolFrom.put(arbolDate.put(arbolId.put(m,2),0),1));
 }
 
 
@@ -30,21 +27,11 @@ void MailManager::deleteMail(unsigned long id) {
 
     try{
         A = arbolId.deleteNodo(id);
+        //tabla.deletePalabras(A);
         A = arbolDate.deleteNodoDate(A);
         arbolFrom.deleteMail(A);
     }catch(int e){
         puts("error 1");
-    }
-
-    try{
-
-    }catch(int e){
-        puts("error 2");
-    }
-    try{
-        //
-    }catch(int e) {
-        puts("error 3");
     }
 }
 
@@ -105,6 +92,13 @@ vector<email> MailManager::getByFrom(string from) {
  */
 vector<email> MailManager::getByQuery(string query) {
     vector<email> ret;
+    char *texto = (char*)query.c_str();
+    vector<unsigned long> aux;
+    tabla.get(&aux,texto);
 
+    while(aux.empty() != 1){
+        ret.push_back(*arbolId.getId(aux.back()));
+        aux.pop_back();
+    }
     return ret;
 }

@@ -50,6 +50,8 @@ void MainWindow::on_pushButton_clicked()
     cont++;
     A.from = "Juan";
     A.date = "2017 10 10";
+    A.content = "Hoa mUndo";
+    A.subject = "Hoa juaasnl juan Hola";
 
     MM->addMail(A);
 }
@@ -58,7 +60,8 @@ void MainWindow::on_act_button_clicked()
 {
     vector<email> A;
     QString aux;
-    A = MM->getSortedByDate();
+    //A = MM->getSortedByDate();
+    A = MM->getByQuery("Hola");
 
     switch (A.size()) {
     default:

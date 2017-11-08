@@ -51,6 +51,7 @@ public:
     void getAll(vector<email>* A);
     void getFiltered(vector<email>* A,unsigned long desde,unsigned long hasta);
     void getByFrom(vector<email>* A,string dat);
+    email* getId(unsigned long d);
     email* deleteNodo(unsigned long id);
     email* deleteNodoDate(email* m);
     void deleteMail(email* m);
@@ -69,6 +70,7 @@ public:
     void getAll(vector<email>* A);
     void getFiltered(vector<email>* A,unsigned long desde,unsigned long hasta);
     void getByFrom(vector<email>* A,string dat);
+    email* getId(unsigned long d);
     email* deleteNodo(unsigned long id);
     email* deleteNodoDate(email* m);
     void deleteMail(email* m);

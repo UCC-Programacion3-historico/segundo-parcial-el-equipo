@@ -56,6 +56,13 @@ void arbolMail::getByFrom(vector<email>* A,string dat) {
     raiz->getByFrom(A,dat);
 }
 
+email* arbolMail::getId(unsigned long d){
+    if(raiz == NULL){
+        return NULL;
+    }
+    return raiz->getId(d);
+}
+
 email* arbolMail::deleteNodo(unsigned long id){
     if(raiz == NULL) {
         return NULL;
@@ -157,19 +164,17 @@ email* arbolMail::deleteNodoDate(email *m){
         return NULL;
     }
     if(raiz->getDer() != NULL) {
-        if(raiz->getDer()->getMail()->getDateScore() == m->getDateScore()) {
-            if(raiz->getDer()->getMail()->id == m->id){
-                nodoMail* aux = raiz->getDer()->getDer();
-                nodoMail* aux2 = raiz->getDer()->getIzq();
-                delete raiz->getDer();
-                if(aux2 == NULL){
-                    raiz->setDer(aux);
-                    return m;
-                }
-                raiz->setDer(aux2);
-                raiz->getDer()->put(aux,0);
+        if(raiz->getDer()->getMail()->id == m->id){
+            nodoMail* aux = raiz->getDer()->getDer();
+            nodoMail* aux2 = raiz->getDer()->getIzq();
+            delete raiz->getDer();
+            if(aux2 == NULL){
+                raiz->setDer(aux);
                 return m;
             }
+            raiz->setDer(aux2);
+            raiz->getDer()->put(aux,0);
+            return m;
         }
         return raiz->getDer()->deleteNodoDate(m);
     }
@@ -369,6 +374,25 @@ void nodoMail::getByFrom(vector<email>* A,string dat) {
     }
 }
 
+email* nodoMail::getId(unsigned long d){
+    if(d < getMail()->id){
+        if(izq != NULL){
+            return izq->getId(d);
+        }
+        return NULL;
+    }
+    if(d > getMail()->id){
+        if(der != NULL){
+            return der->getId(d);
+        }
+        return NULL;
+    }
+    if(d == getMail()->id){
+        return getMail();
+    }
+    return NULL;
+}
+
 email* nodoMail::deleteNodo(unsigned long id){
     if(id < this->getMail()->id) {
         if(izq != NULL){
@@ -435,40 +459,36 @@ email* nodoMail::deleteNodoDate(email* m) {
     }
     if(this->getMail()->getDateScore() > m->getDateScore()) {
         if(izq != NULL) {
-            if(izq->getMail()->getDateScore() == m->getDateScore()){
-                if(izq->getMail()->id == m->id) {
-                    nodoMail* aux = izq->izq;
-                    nodoMail* aux2 = izq->der;
-                    izq->mail = NULL;
-                    delete izq;
-                    if(aux2 == NULL) {
-                        izq = aux;
-                        return m;
-                    }
-                    izq = aux2;
-                    izq->put(aux,0);
+            if(izq->getMail()->id == m->id) {
+                nodoMail* aux = izq->izq;
+                nodoMail* aux2 = izq->der;
+                izq->mail = NULL;
+                delete izq;
+                if(aux2 == NULL) {
+                    izq = aux;
                     return m;
                 }
+                izq = aux2;
+                izq->put(aux,0);
+                return m;
             }
             return izq->deleteNodoDate(m);
         }
         return NULL;
     }
     if(der != NULL){
-        if(der->getMail()->getDateScore() == m->getDateScore()) {
-            if(der->getMail()->id == m->id) {
-                nodoMail* aux = der->der;
-                nodoMail* aux2 = der->izq;
-                der->mail = NULL;
-                delete der;
-                if(aux2 == NULL){
-                    der = aux;
-                    return m;
-                }
-                der = aux2;
-                der->put(aux,0);
+        if(der->getMail()->id == m->id) {
+            nodoMail* aux = der->der;
+            nodoMail* aux2 = der->izq;
+            der->mail = NULL;
+            delete der;
+            if(aux2 == NULL){
+                der = aux;
                 return m;
             }
+            der = aux2;
+            der->put(aux,0);
+            return m;
         }
         return der->deleteNodoDate(m);
     }
@@ -478,58 +498,51 @@ email* nodoMail::deleteNodoDate(email* m) {
 void nodoMail::deleteMail(email* m){
     if(compareFrom(this->getMail()->from,m->from) == 1) {
         if(der != NULL){
-            if(compareFrom(der->getMail()->from,m->from) == 1){
-                if(der->getMail()->id == m->id){
-                    nodoMail* aux = der->der;
-                    nodoMail* aux2 = der->izq;
-                    delete der->mail;
-                    delete der;
-                    if(aux2 == NULL){
-                        der = aux;
-                        return;
-                    }
-                    der = aux2;
-                    der->put(aux,1);
+            if(der->getMail()->id == m->id){
+                nodoMail* aux = der->der;
+                nodoMail* aux2 = der->izq;
+                delete der->mail;
+                delete der;
+                if(aux2 == NULL){
+                    der = aux;
                     return;
                 }
-                der->deleteMail(m);
+                der = aux2;
+                der->put(aux,1);
+                return;
             }
-            return;
+            der->deleteMail(m);
         }
         return;
     }
     if(compareFrom(this->getMail()->from,m->from) == 2){
         if(izq != NULL) {
-            if(compareFrom(izq->getMail()->from,m->from) == 1) {
-                if(izq->getMail()->id == m->id) {
-                    nodoMail* aux = izq->izq;
-                    nodoMail* aux2 = izq->der;
-                    delete izq->mail;
-                    delete izq;
-                    if(aux2 == NULL){
-                        izq = aux;
-                        return;
-                    }
-                    izq = aux2;
-                    izq->put(aux,1);
+            if(izq->getMail()->id == m->id) {
+                nodoMail* aux = izq->izq;
+                nodoMail* aux2 = izq->der;
+                delete izq->mail;
+                delete izq;
+                if(aux2 == NULL){
+                    izq = aux;
                     return;
                 }
+                izq = aux2;
+                izq->put(aux,1);
+                return;
             }
             izq->deleteMail(m);
         }
         return;
     }
     if(der != NULL) {
-        if(compareFrom(der->getMail()->from,m->from) == 1){
-            if(der->getMail()->id == m->id) {
-                nodoMail* aux = der->der;
-                nodoMail* aux2 = der->izq;
-                der->mail = NULL;
-                delete der;
-                der = aux2;
-                der->put(aux,1);
-                return;
-            }
+        if(der->getMail()->id == m->id) {
+            nodoMail* aux = der->der;
+            nodoMail* aux2 = der->izq;
+            der->mail = NULL;
+            delete der;
+            der = aux2;
+            der->put(aux,1);
+            return;
         }
         der->deleteMail(m);
         return;

@@ -9,6 +9,8 @@
 #include <stdio.h>
 
 #include "arbolmail.h"
+#include "tablapalabras.h"
+
 using namespace std;
 
 
@@ -19,6 +21,7 @@ private:
     arbolMail arbolFrom;
     arbolMail arbolId;
 
+    tablaPalabras tabla;
 public:
     MailManager();
 
