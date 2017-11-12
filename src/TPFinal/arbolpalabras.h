@@ -10,6 +10,7 @@ private:
     int largo;
     nodoPalabra* izq;
     nodoPalabra* der;
+    nodoPalabra* lista;
 public:
     nodoPalabra(char* pa,int lar,unsigned long i){
         izq = NULL;
@@ -17,12 +18,27 @@ public:
         palabra = pa;
         largo = lar;
         id = i;
+        lista = NULL;
     }
     nodoPalabra(){
         izq = NULL;
         der = NULL;
         palabra = NULL;
+        lista = NULL;
     }
+
+    nodoPalabra* getLis(){
+        return lista;
+    }
+
+    nodoPalabra* getNext(){
+        return lista;
+    }
+
+    void setNext(nodoPalabra* A){
+        lista = A;
+    }
+
     unsigned long getId(){
         return id;
     }
@@ -57,6 +73,11 @@ public:
     void add(char* pa,int lar, unsigned long d);
     void get(vector<unsigned long>* A,char* texto, int len);
     void remove(char* pa,int lar, unsigned long d);
+    void put(nodoPalabra* A);
+    nodoPalabra* getFirstLista();
+    void deleteLista(unsigned long d);
+    void addLista(nodoPalabra* A);
+    void getLista(vector<unsigned long>* A);
 };
 
 class arbolPalabras
@@ -68,6 +89,7 @@ public:
     void add(char* pa,int lar, unsigned long d);
     void get(vector<unsigned long>* A,char* texto, int len);
     void remove(char* pa,int lar, unsigned long d);
+    void put(nodoPalabra* A);
 };
 
 int comparaPalabra(char* A,char* B,int largo);

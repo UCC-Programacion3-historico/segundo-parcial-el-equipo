@@ -4,7 +4,7 @@
 #include "arbolpalabras.h"
 #include <iostream>
 
-#define SIZE_TABLA 7
+#define SIZE_TABLA 10
 
 class tablaPalabras {
 private:

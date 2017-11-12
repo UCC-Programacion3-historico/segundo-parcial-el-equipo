@@ -9,17 +9,36 @@ private:
     email* mail;
     nodoMail* izq;
     nodoMail* der;
+    nodoMail* lista;
 public:
     nodoMail(email *m) {
         mail = m;
         izq = NULL;
         der = NULL;
+        lista = NULL;
     }
     nodoMail(email m){
         mail = new email;
         *mail = m;
         izq = NULL;
         der = NULL;
+        lista = NULL;
+    }
+
+    nodoMail* getNext(){
+        return lista;
+    }
+
+    void setNext(nodoMail* A){
+        lista = A;
+    }
+
+    nodoMail* getLista(){
+        return lista;
+    }
+
+    void setLista(nodoMail* lis){
+        lista = lis;
     }
 
     email* getMail() {
@@ -55,6 +74,11 @@ public:
     email* deleteNodo(unsigned long id);
     email* deleteNodoDate(email* m);
     void deleteMail(email* m);
+    nodoMail* getFirstLista();
+    nodoMail* addLista(email n);
+    nodoMail* addLista(nodoMail* n);
+    email* deleteLista(unsigned long d);
+    void getLista(vector<email>* A);
 };
 
 class arbolMail {
@@ -66,7 +90,6 @@ public:
 
     nodoMail* put(email n,int modo);
     nodoMail* put(nodoMail* n,int modo);
-    bool esVacio();
     void getAll(vector<email>* A);
     void getFiltered(vector<email>* A,unsigned long desde,unsigned long hasta);
     void getByFrom(vector<email>* A,string dat);

@@ -46,5 +46,4 @@ FORMS += \
         mainwindow.ui \
     addmaildialog.ui
 
-DISTFILES += \
-    DBmails.txt
+DISTFILES +=

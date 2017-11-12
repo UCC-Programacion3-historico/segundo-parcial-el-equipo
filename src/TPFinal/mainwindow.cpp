@@ -27,7 +27,7 @@ MainWindow::~MainWindow()
 void MainWindow::on_pushButton_clicked()
 {
     email A;
-/*
+
     QString aux;
 
     aux = ui->textEdit->toPlainText();
@@ -45,13 +45,9 @@ void MainWindow::on_pushButton_clicked()
     aux = ui->textEdit_5->toPlainText();
     A.content = aux.toStdString();
     ui->textEdit_5->setText("");
-*/
+
     A.id = cont;
     cont++;
-    A.from = "Juan";
-    A.date = "2017 10 10";
-    A.content = "Hoa mUndo";
-    A.subject = "Hoa juaasnl juan Hola";
 
     MM->addMail(A);
 }
@@ -60,8 +56,8 @@ void MainWindow::on_act_button_clicked()
 {
     vector<email> A;
     QString aux;
-    //A = MM->getSortedByDate();
-    A = MM->getByQuery("Hola");
+    A = MM->getByQuery("pablo");
+    //A = MM->getByQuery("Hola");
 
     switch (A.size()) {
     default:

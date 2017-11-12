@@ -24,10 +24,9 @@ void MailManager::addMail(email m) {
  */
 void MailManager::deleteMail(unsigned long id) {
     email* A =  NULL;
-
     try{
         A = arbolId.deleteNodo(id);
-        //tabla.deletePalabras(A);
+        tabla.deletePalabras(A);
         A = arbolDate.deleteNodoDate(A);
         arbolFrom.deleteMail(A);
     }catch(int e){
@@ -55,8 +54,8 @@ vector<email> MailManager::getSortedByDate() {
  */
 vector<email> MailManager::getSortedByDate(string desde, string hasta) {
     vector<email> ret;
-    unsigned long a = desde[0]*10000000 + desde[1]*1000000 + desde[2]*100000 + desde[3]*10000 + desde[5]*1000 + desde[6]*100 + desde[8]*10 + desde[9];
-    unsigned long b = hasta[0]*10000000 + hasta[1]*1000000 + hasta[2]*100000 + hasta[3]*10000 + hasta[5]*1000 + hasta[6]*100 + hasta[8]*10 + hasta[9];
+    unsigned long a = (desde[0]-48)*10000000 + (desde[1]-48)*1000000 + (desde[2]-48)*100000 + (desde[3]-48)*10000 + (desde[5]-48)*1000 + (desde[6]-48)*100 + (desde[8]-48)*10 + (desde[9]-48);
+    unsigned long b = (hasta[0]-48)*10000000 + (hasta[1]-48)*1000000 + (hasta[2]-48)*100000 + (hasta[3]-48)*10000 + (hasta[5]-48)*1000 + (hasta[6]-48)*100 + (hasta[8]-48)*10 + (hasta[9]-48);
     arbolDate.getFiltered(&ret,a,b);
     return ret;
 }

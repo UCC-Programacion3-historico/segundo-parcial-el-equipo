@@ -19,10 +19,6 @@ public:
     email &operator = (const email &c);
 
     unsigned long getDateScore();
-
-    void put(email nuevo);
-    email* getFirst(email* root);
-    email* get();
 };
 
 int compareFrom(string A, string B);

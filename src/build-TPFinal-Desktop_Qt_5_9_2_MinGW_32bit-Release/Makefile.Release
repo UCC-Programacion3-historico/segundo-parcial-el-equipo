@@ -65,7 +65,7 @@ OBJECTS       = release/main.o \
 		release/moc_mainwindow.o \
 		release/moc_addmaildialog.o
 
-DIST          = DBmails.txt ..\TPFinal\mainwindow.h \
+DIST          =  ..\TPFinal\mainwindow.h \
 		..\TPFinal\email.h \
 		..\TPFinal\MailManager.h \
 		..\TPFinal\addmaildialog.h \
@@ -816,14 +816,14 @@ release/addmaildialog.o: ../TPFinal/addmaildialog.cpp ../TPFinal/addmaildialog.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o release\addmaildialog.o ..\TPFinal\addmaildialog.cpp
 
 release/arbolpalabras.o: ../TPFinal/arbolpalabras.cpp ../TPFinal/arbolpalabras.h \
-		../TPFinal/email.h \
-		../TPFinal/arbolmail.h
+		../TPFinal/arbolmail.h \
+		../TPFinal/email.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o release\arbolpalabras.o ..\TPFinal\arbolpalabras.cpp
 
 release/tablapalabras.o: ../TPFinal/tablapalabras.cpp ../TPFinal/tablapalabras.h \
 		../TPFinal/arbolpalabras.h \
-		../TPFinal/email.h \
-		../TPFinal/arbolmail.h
+		../TPFinal/arbolmail.h \
+		../TPFinal/email.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o release\tablapalabras.o ..\TPFinal\tablapalabras.cpp
 
 release/moc_mainwindow.o: release/moc_mainwindow.cpp 

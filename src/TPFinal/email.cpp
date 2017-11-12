@@ -10,7 +10,7 @@ email &email::operator = (const email &c) {
 }
 
 unsigned long email::getDateScore() {
-    return date[0]*10000000 + date[1]*1000000 + date[2]*100000 + date[3]*10000 + date[5]*1000 + date[6]*100 + date[8]*10 + date[9];
+    return (date[0]-48)*10000000 + (date[1]-48)*1000000 + (date[2]-48)*100000 + (date[3]-48)*10000 + (date[5]-48)*1000 + (date[6]-48)*100 + (date[8]-48)*10 + (date[9]-48);
 }
 
 int compareFrom(string A, string B) {

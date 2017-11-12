@@ -38,16 +38,16 @@ void tablaPalabras::add(nodoMail *A){
         }
     }
 }
-/*
+
 void tablaPalabras::deletePalabras(email* A){
     if(A == NULL){
         throw 1;
     }
     bool salir = 0;
-    char* tmp = &A->getMail()->content[0];
+    char* tmp = &A->content[0];
     while(salir == 0){
         if(largoPalabra(tmp) != 0){
-            arbolTexto[(largoPalabra(tmp)%SIZE_TABLA)].remove(tmp,largoPalabra(tmp),A->getMail()->id);
+            arbolTexto[(largoPalabra(tmp)%SIZE_TABLA)].remove(tmp,largoPalabra(tmp),A->id);
             tmp = tmp + largoPalabra(tmp);
         }else{
             if(tmp[0] == '\0'){
@@ -58,10 +58,10 @@ void tablaPalabras::deletePalabras(email* A){
         }
     }
     salir = 0;
-    tmp = &A->getMail()->subject[0];
+    tmp = &A->subject[0];
     while(salir == 0){
         if(largoPalabra(tmp) != 0){
-            arbolTexto[(largoPalabra(tmp)%SIZE_TABLA)].remove(tmp,largoPalabra(tmp),A->getMail()->id);
+            arbolTexto[(largoPalabra(tmp)%SIZE_TABLA)].remove(tmp,largoPalabra(tmp),A->id);
             tmp = tmp + largoPalabra(tmp);
         }else{
             if(tmp[0] == '\0'){
@@ -72,7 +72,7 @@ void tablaPalabras::deletePalabras(email* A){
         }
     }
 }
-*/
+
 void tablaPalabras::get(vector<unsigned long>* A,char* texto){
     if(texto[0] == '\0'){
         throw 1;

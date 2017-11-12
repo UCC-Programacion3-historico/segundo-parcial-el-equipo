@@ -65,7 +65,7 @@ OBJECTS       = debug/main.o \
 		debug/moc_mainwindow.o \
 		debug/moc_addmaildialog.o
 
-DIST          = DBmails.txt ..\TPFinal\mainwindow.h \
+DIST          =  ..\TPFinal\mainwindow.h \
 		..\TPFinal\email.h \
 		..\TPFinal\MailManager.h \
 		..\TPFinal\addmaildialog.h \
@@ -816,14 +816,14 @@ debug/addmaildialog.o: ../TPFinal/addmaildialog.cpp ../TPFinal/addmaildialog.h \
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o debug\addmaildialog.o ..\TPFinal\addmaildialog.cpp
 
 debug/arbolpalabras.o: ../TPFinal/arbolpalabras.cpp ../TPFinal/arbolpalabras.h \
-		../TPFinal/email.h \
-		../TPFinal/arbolmail.h
+		../TPFinal/arbolmail.h \
+		../TPFinal/email.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o debug\arbolpalabras.o ..\TPFinal\arbolpalabras.cpp
 
 debug/tablapalabras.o: ../TPFinal/tablapalabras.cpp ../TPFinal/tablapalabras.h \
 		../TPFinal/arbolpalabras.h \
-		../TPFinal/email.h \
-		../TPFinal/arbolmail.h
+		../TPFinal/arbolmail.h \
+		../TPFinal/email.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o debug\tablapalabras.o ..\TPFinal\tablapalabras.cpp
 
 debug/moc_mainwindow.o: debug/moc_mainwindow.cpp 
