@@ -56,7 +56,7 @@ void MainWindow::on_act_button_clicked()
 {
     vector<email> A;
     QString aux;
-    A = MM->getByQuery("pablo");
+    A = MM->getSortedByFrom();
     //A = MM->getByQuery("Hola");
 
     switch (A.size()) {
@@ -107,7 +107,11 @@ void MainWindow::on_pushButton_3_clicked(){
 
 void MainWindow::on_pushButton_2_clicked()
 {
-    MM->deleteMail(1);
+    MM->deleteMail(cont-1);
+    cont--;
+    if(cont < 0){
+        cont = 0;
+    }
     ui->date_1->setText("");
     ui->date_2->setText("");
     ui->date_3->setText("");

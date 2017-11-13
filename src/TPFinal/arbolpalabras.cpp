@@ -5,6 +5,12 @@ arbolPalabras::arbolPalabras()
     raiz = NULL;
 }
 
+/**
+ * Agrega una palabra al arbol creando el nodo
+ * @param pa palabra a agregar
+ * @param lar largo de la palabra
+ * @param d id del mail al que pertenece la palabra
+ */
 void arbolPalabras::add(char* pa,int lar, unsigned long d){
     if(raiz == NULL){
         raiz = new nodoPalabra(pa,lar,d);
@@ -14,19 +20,29 @@ void arbolPalabras::add(char* pa,int lar, unsigned long d){
     return;
 }
 
+/**
+ * Devuelve un vector con las id de los mails que tienen la palabra
+ * @param A vector de ids
+ * @param texto palabra a buscar
+ * @param len largo de la palabra
+ */
 void arbolPalabras::get(vector<unsigned long>* A,char* texto, int len){
     if(raiz == NULL){
         A->clear();
         return;
     }
-
     raiz->get(A,texto,len);
 }
 
+/**
+ * Elimina una palabra del arbol
+ * @param pa palabra a eliminar
+ * @param lar largo de la palabra
+ * @param d id del mail al que pertenece la palabra
+ *  Throw 1 no se encontro la palabra
+ */
 void arbolPalabras::remove(char* pa,int lar, unsigned long d){
-    if(raiz == NULL){
-        return;
-    }
+    if(raiz == NULL)throw 1;
 
     if(raiz->getLargo() == lar && comparaPalabra(pa,raiz->getPalabra(),lar) == 1){
         if(raiz->getId() == d){
@@ -35,7 +51,7 @@ void arbolPalabras::remove(char* pa,int lar, unsigned long d){
             nodoPalabra* aux2 = raiz->getIzq();
             delete raiz;
             if(lis != NULL){
-                raiz = lis->getFirstLista();
+                raiz = lis;
                 raiz->put(aux);
                 raiz->put(aux2);
                 return;
@@ -48,7 +64,13 @@ void arbolPalabras::remove(char* pa,int lar, unsigned long d){
             raiz->put(aux);
             return;
         }
-        raiz->deleteLista(d);
+        try{
+            raiz->deleteLista(d);
+        }catch(int e){
+            if(e == 1){
+                throw 1;
+            }
+        }
         return;
     }
     if(raiz->getLargo() > lar || (raiz->getLargo() == lar && comparaPalabra(pa,raiz->getPalabra(),lar) == 0)){
@@ -60,7 +82,7 @@ void arbolPalabras::remove(char* pa,int lar, unsigned long d){
                     nodoPalabra* aux2 = raiz->getIzq()->getDer();
                     delete raiz->getIzq();
                     if(lis != NULL){
-                        raiz->setIzq(lis->getFirstLista());
+                        raiz->setIzq(lis);
                         raiz->getIzq()->put(aux);
                         raiz->getIzq()->put(aux2);
                         return;
@@ -73,10 +95,22 @@ void arbolPalabras::remove(char* pa,int lar, unsigned long d){
                     raiz->getIzq()->put(aux);
                     return;
                 }
-                raiz->getIzq()->deleteLista(d);
+                try{
+                    raiz->getIzq()->deleteLista(d);
+                }catch(int e){
+                    if(e == 1){
+                        throw 1;
+                    }
+                }
                 return;
             }
-            raiz->getIzq()->remove(pa,lar,d);
+            try{
+                raiz->getIzq()->remove(pa,lar,d);
+            }catch(int e){
+                if(e == 1){
+                    throw 1;
+                }
+            }
         }
         return;
     }
@@ -88,7 +122,7 @@ void arbolPalabras::remove(char* pa,int lar, unsigned long d){
                 nodoPalabra* aux2 = raiz->getDer()->getDer();
                 delete raiz->getDer();
                 if(lis != NULL){
-                    raiz->setDer(lis->getFirstLista());
+                    raiz->setDer(lis);
                     raiz->getDer()->put(aux);
                     raiz->getDer()->put(aux2);
                     return;
@@ -101,24 +135,31 @@ void arbolPalabras::remove(char* pa,int lar, unsigned long d){
                 raiz->getDer()->put(aux);
                 return;
             }
-            raiz->getDer()->deleteLista(d);
+            try{
+                raiz->getDer()->deleteLista(d);
+            }catch(int e){
+                if(e == 1){
+                    throw 1;
+                }
+            }
             return;
         }
-        raiz->getDer()->remove(pa,lar,d);
+        try{
+            raiz->getDer()->remove(pa,lar,d);
+        }catch(int e){
+            if(e == 1){
+                throw 1;
+            }
+        }
     }
 }
 
-void arbolPalabras::put(nodoPalabra* A){
-    if(A = NULL){
-        return;
-    }
-    if(raiz == NULL){
-        raiz = A;
-        return;
-    }
-    raiz->put(A);
-}
-
+/**
+ * Agrega una palabra al arbol creando un nodo nuevo
+ * @param pa palabra a agregar
+ * @param lar largo de la palabra
+ * @param d id del mail al que corresponde la palabra
+ */
 void nodoPalabra::add(char* pa,int lar, unsigned long d){
     if(lar > largo){
         if(der != NULL){
@@ -156,6 +197,12 @@ void nodoPalabra::add(char* pa,int lar, unsigned long d){
     return;
 }
 
+/**
+ * Busca el nodo que se quiere devolver
+ * @param A vector para almacenar las id de los mail que tienen la palabra buscada
+ * @param texto palabra a buscar
+ * @param len largo de la palabra
+ */
 void nodoPalabra::get(vector<unsigned long>* A,char* texto, int len){
     switch (comparaPalabra(texto,palabra,len)) {
     case 0:
@@ -174,17 +221,26 @@ void nodoPalabra::get(vector<unsigned long>* A,char* texto, int len){
     }
 }
 
+/**
+ * Elimina una palabra del arbol
+ * @param pa palabra a eliminar
+ * @param lar largo de la palabra
+ * @param d id del mail al que pertenece la palabra
+ *  Throw 1 no se encontro el nodo a eliminar
+ */
 void nodoPalabra::remove(char* pa,int lar, unsigned long d){
     if(largo > lar || (largo == lar && comparaPalabra(pa,palabra,lar) == 0)){
         if(izq != NULL){
-            if(comparaPalabra(pa,izq->getPalabra(),lar) == 1 && izq->getLargo() == lar){
+            if( izq->getLargo() == lar && comparaPalabra(pa,izq->getPalabra(),lar) == 1){
                 if(izq->getId() == d){
+                    //Copia los datos del nodo a borrar
                     nodoPalabra* lis = izq->getLis();
                     nodoPalabra* aux = izq->getIzq();
                     nodoPalabra* aux2 = izq->getDer();
                     delete izq;
+
                     if(lis != NULL){
-                        izq = lis->getFirstLista();
+                        izq = lis;
                         izq->put(aux);
                         izq->put(aux2);
                         return;
@@ -197,22 +253,34 @@ void nodoPalabra::remove(char* pa,int lar, unsigned long d){
                     izq->put(aux);
                     return;
                 }
-                izq->deleteLista(d);
+                try{
+                    izq->deleteLista(d);
+                }catch(int e){
+                    if(e == 1){
+                        throw 1;
+                    }
+                }
                 return;
             }
-            izq->remove(pa,lar,d);
+            try{
+                izq->remove(pa,lar,d);
+            }catch(int e){
+                if(e == 1){
+                    throw 1;
+                }
+            }
         }
         return;
     }
     if(der != NULL){
-        if(comparaPalabra(pa,der->getPalabra(),lar) == 1 && der->getLargo() == lar){
+        if( der->getLargo() == lar && comparaPalabra(pa,der->getPalabra(),lar) == 1){
             if(der->getId() == d){
                 nodoPalabra* lis = der->getLis();
                 nodoPalabra* aux = der->getIzq();
                 nodoPalabra* aux2 = der->getDer();
                 delete der;
                 if(lis != NULL){
-                    der = lis->getFirstLista();
+                    der = lis;
                     der->put(aux);
                     der->put(aux2);
                     return;
@@ -225,15 +293,31 @@ void nodoPalabra::remove(char* pa,int lar, unsigned long d){
                 der->put(aux);
                 return;
             }
-            der->deleteLista(d);
-            return;
+            try{
+                der->deleteLista(d);
+            }catch(int e){
+                if(e == 1){
+                    throw 1;
+                }
+            }
         }
-        der->remove(pa,lar,d);
+        try{
+            der->remove(pa,lar,d);
+        }catch(int e){
+            if(e == 1){
+                throw 1;
+            }
+        }
     }
     return;
 }
 
+/**
+ * Acomoda nodos existentes en el arbol.
+ * @param A nodo a acomodar
+ */
 void nodoPalabra::put(nodoPalabra* A){
+    if(A == NULL)return;
     if(largo > A->getLargo() || (largo == A->getLargo() && comparaPalabra(A->getPalabra(),palabra,A->getLargo()) == 0)){
         if(izq != NULL){
             izq->put(A);
@@ -250,17 +334,15 @@ void nodoPalabra::put(nodoPalabra* A){
     return;
 }
 
-nodoPalabra* nodoPalabra::getFirstLista(){
-    if(lista == NULL) return NULL;
-    nodoPalabra* aux = lista;
-    lista = lista->getNext();
-    return aux;
-
-}
-
+/**
+ * Busca en la lista si hay una palabra con ese id y la elimina el nodo
+ * @param d id del mail que se va a eliminar
+ *  Throw 1 es que no encontro la palabra para borrar.
+ */
 void nodoPalabra::deleteLista(unsigned long d){
-    if(lista == NULL)return;
+    if(lista == NULL)throw 1;
     nodoPalabra* aux = lista;
+
     if(lista->id == d){
         lista = lista->getNext();
         delete aux;
@@ -276,13 +358,16 @@ void nodoPalabra::deleteLista(unsigned long d){
         delete tmp;
         return;
     }
-    return;
+    throw 1;
 }
 
+/**
+ * Agrega una palabra a la lista
+ * @param A nodoPalabra a agregar a la lista
+ */
 void nodoPalabra::addLista(nodoPalabra* A){
-    if(A->getId() == id){
-        return;
-    }
+    if(A->getId() == id)return;
+
     if(lista == NULL){
         lista = A;
         return;
@@ -292,12 +377,14 @@ void nodoPalabra::addLista(nodoPalabra* A){
     while (aux->getNext() != NULL && aux->getId() != A->getId()) {
         aux = aux->getNext();
     }
-    if(aux->getId() == A->getId()){
-        return;
-    }
+    if(aux->getId() == A->getId())return;
     aux->setNext(A);
 }
 
+/**
+ * Carga todas las id de que estan en la lista en el vector
+ * @param A Vector para almacenar los id
+ */
 void nodoPalabra::getLista(vector<unsigned long>* A){
     A->push_back(id);
     if(lista == NULL)return;
@@ -309,6 +396,16 @@ void nodoPalabra::getLista(vector<unsigned long>* A){
     A->push_back(aux->id);
 }
 
+/**
+ * Compara dos palabras alfabeticamente del mismo largo
+ * @param A una palabra
+ * @param B la otra palabra
+ * @param largo largo de las palabras
+ * @return devuelve:
+ *  - 0 si A<B
+ *  - 1 si A=B
+ *  - 2 si A>B
+ */
 int comparaPalabra(char* A,char* B,int largo){
     int i = 0;
     do{

@@ -13,40 +13,6 @@ nodoMail* arbolMail::put(email n,int modo) {
         raiz = new nodoMail(n);
         return raiz;
     }
-//    if(modo == 0) {
-//        if(raiz->getMail()->getDateScore() < n.getDateScore()) {
-//            if(raiz->getIzq() != NULL) {
-//                return raiz->getIzq()->put(n,modo);
-//            }
-//            raiz->setIzq(new nodoMail(n));
-//            return raiz->getIzq();
-//        }
-//        if(n.getDateScore() == raiz->getMail()->getDateScore()){
-//            return raiz->addLista(n);
-//        }
-//        if(raiz->getDer() != NULL) {
-//            return raiz->getDer()->put(n,modo);
-//        }
-//        raiz->setDer(new nodoMail(n));
-//        return raiz->getDer();
-//    }
-//    if(modo == 1) {
-//        if(compareFrom(n.from,raiz->getMail()->from) < 1) {
-//            if(raiz->getIzq() != NULL) {
-//                return raiz->getIzq()->put(n,modo);
-//            }
-//            raiz->setIzq(new nodoMail(n));
-//            return raiz->getIzq();
-//        }
-//        if(compareFrom(n.from,raiz->getMail()->from) == 1){
-//            return raiz->addLista(n);
-//        }
-//        if(raiz->getDer() != NULL) {
-//            return raiz->getDer()->put(n,modo);
-//        }
-//        raiz->setDer(new nodoMail(n));
-//        return raiz->getDer();
-//    }
     if(raiz->getMail()->id > n.id) {
         if(raiz->getIzq() != NULL) {
             return raiz->getIzq()->put(n,modo);
@@ -154,24 +120,16 @@ email* arbolMail::deleteNodo(unsigned long id){
     }
     if(raiz->getMail()->id == id){
         email* tmp = raiz->getMail();
-        nodoMail* lis = raiz->getLista();
         nodoMail* aux = raiz->getDer();
         nodoMail* aux2 = raiz->getIzq();
         delete raiz;
-        if(lis != NULL){
-            raiz = lis->getFirstLista();
-            raiz->put(aux,2);
-            raiz->put(aux2,2);
-            return tmp;
-        }else{
-            if(aux2 == NULL){
-                raiz = aux;
-                return tmp;
-            }
-            raiz = aux2;
-            raiz->put(aux,2);
+        if(aux2 == NULL){
+            raiz = aux;
             return tmp;
         }
+        raiz = aux2;
+        raiz->put(aux,2);
+        return tmp;
     }
     if(id < raiz->getMail()->id) {
         if(raiz->getIzq() != NULL){
@@ -225,9 +183,10 @@ email* arbolMail::deleteNodoDate(email *m){
             nodoMail* aux2 = raiz->getIzq();
             delete raiz;
             if(lis != NULL){
-                raiz = lis->getFirstLista();
+                raiz = lis;
                 raiz->put(aux,0);
                 raiz->put(aux2,0);
+                return m;
             }else{
                 if(aux2 == NULL){
                     raiz = aux;
@@ -249,7 +208,7 @@ email* arbolMail::deleteNodoDate(email *m){
                     nodoMail* aux2 = raiz->getIzq()->getDer();
                     delete raiz->getIzq();
                     if(lis != NULL){
-                        raiz = lis->getFirstLista();
+                        raiz = lis;
                         raiz->put(aux,0);
                         raiz->put(aux2,0);
                         return m;
@@ -277,7 +236,7 @@ email* arbolMail::deleteNodoDate(email *m){
                 nodoMail* aux2 = raiz->getDer()->getIzq();
                 delete raiz->getDer();
                 if(lis != NULL){
-                    raiz = lis->getFirstLista();
+                    raiz = lis;
                     raiz->put(aux,0);
                     raiz->put(aux2,0);
                     return m;
@@ -305,38 +264,43 @@ void arbolMail::deleteMail(email* m){
     if(raiz == NULL) {
         return;
     }
-    if(raiz->getMail()->id == m->id){
-        nodoMail* lis = raiz->getLista();
-        nodoMail* aux = raiz->getDer();
-        nodoMail* aux2 = raiz->getIzq();
-        delete raiz->getMail();
-        delete raiz;
-        if(lis != NULL){
-            raiz = lis->getFirstLista();
-            raiz->put(aux,1);
-            raiz->put(aux2,1);
-            return;
-        }else{
-            if(aux2 == NULL){
-                raiz->setDer(aux);
+    if(compareFrom(raiz->getMail()->from,m->from) == 1){
+        if(raiz->getMail()->id == m->id){
+            nodoMail* lis = raiz->getLista();
+            nodoMail* aux = raiz->getDer();
+            nodoMail* aux2 = raiz->getIzq();
+            delete raiz->getMail();
+            delete raiz;
+            if(lis != NULL){
+                raiz = lis;
+                raiz->put(aux,1);
+                raiz->put(aux2,1);
+                return;
+            }else{
+                if(aux2 == NULL){
+                    raiz = aux;
+                    return;
+                }
+                raiz = aux2;
+                raiz->put(aux,1);
                 return;
             }
-            raiz->setDer(aux2);
-            raiz->getDer()->put(aux,1);
-            return;
         }
+        delete raiz->deleteLista(m->id);
+        return;
     }
-    if(compareFrom(raiz->getMail()->from,m->from) < 2){
+
+    if(compareFrom(raiz->getMail()->from,m->from) == 0){
         if(raiz->getDer() != NULL) {
             if(compareFrom(raiz->getDer()->getMail()->from,m->from) == 1){
                 if(raiz->getDer()->getMail()->id == m->id) {
-                    nodoMail* lis = raiz->getLista();
+                    nodoMail* lis = raiz->getDer()->getLista();
                     nodoMail* aux = raiz->getDer()->getDer();
                     nodoMail* aux2 = raiz->getDer()->getIzq();
                     delete raiz->getDer()->getMail();
                     delete raiz->getDer();
                     if(lis != NULL){
-                        raiz = lis->getFirstLista();
+                        raiz = lis;
                         raiz->put(aux,1);
                         raiz->put(aux2,1);
                         return;
@@ -361,13 +325,13 @@ void arbolMail::deleteMail(email* m){
     if(raiz->getIzq() != NULL) {
         if(compareFrom(raiz->getIzq()->getMail()->from,m->from) == 1){
             if(raiz->getIzq()->getMail()->id == m->id){
-                nodoMail* lis = raiz->getLista();
+                nodoMail* lis = raiz->getIzq()->getLista();
                 nodoMail* aux = raiz->getIzq()->getIzq();
                 nodoMail* aux2 = raiz->getIzq()->getDer();
                 delete raiz->getIzq()->getMail();
                 delete raiz->getIzq();
                 if(lis != NULL){
-                    raiz = lis->getFirstLista();
+                    raiz = lis;
                     raiz->put(aux,1);
                     raiz->put(aux2,1);
                     return;
@@ -439,6 +403,7 @@ nodoMail* nodoMail::put(email n,int modo) {
 }
 
 nodoMail* nodoMail::put(nodoMail* n,int modo) {
+    if(n == NULL) return NULL;
     if(modo == 0) {
         if(n->getMail()->getDateScore() < mail->getDateScore()) {
             if(izq != NULL) {
@@ -561,22 +526,14 @@ email* nodoMail::deleteNodo(unsigned long id){
                 email* tmp = izq->getMail();
                 nodoMail* aux = izq->izq;
                 nodoMail* aux2 = izq->der;
-                nodoMail* lis = izq->getLista();
                 delete izq;
-                if(lis != NULL){
-                    izq = lis->getFirstLista();
-                    izq->put(aux,2);
-                    izq->put(aux2,2);
-                    return tmp;
-                }else{
-                    if(aux2 == NULL){
-                        izq = aux;
-                        return tmp;
-                    }
-                    izq = aux2;
-                    izq->put(aux,2);
+                if(aux2 == NULL){
+                    izq = aux;
                     return tmp;
                 }
+                izq = aux2;
+                izq->put(aux,2);
+                return tmp;
             }
             return izq->deleteNodo(id);
         }
@@ -587,22 +544,14 @@ email* nodoMail::deleteNodo(unsigned long id){
             email* tmp = der->getMail();
             nodoMail* aux = der->der;
             nodoMail* aux2 = der->izq;
-            nodoMail* lis = der->getLista();
             delete der;
-            if(lis != NULL){
-                der = getFirstLista();
-                der->put(aux,2);
-                der->put(aux2,2);
-                return tmp;
-            }else{
-                if(aux2 == NULL){
-                    der = aux;
-                    return tmp;
-                }
-                der = aux2;
-                der->put(aux,2);
+            if(aux2 == NULL){
+                der = aux;
                 return tmp;
             }
+            der = aux2;
+            der->put(aux,2);
+            return tmp;
         }
         return der->deleteNodo(id);
     }
@@ -619,7 +568,7 @@ email* nodoMail::deleteNodoDate(email* m) {
                     nodoMail* aux2 = izq->der;
                     delete izq;
                     if(lis != NULL){
-                        izq = getFirstLista();
+                        izq = lis;
                         izq->put(aux,0);
                         izq->put(aux2,0);
                         return m;
@@ -647,7 +596,7 @@ email* nodoMail::deleteNodoDate(email* m) {
                 nodoMail* aux2 = der->izq;
                 delete der;
                 if(lis != NULL){
-                    der = getFirstLista();
+                    der = lis;
                     der->put(aux,0);
                     der->put(aux2,0);
                     return m;
@@ -673,13 +622,13 @@ void nodoMail::deleteMail(email* m){
         if(izq != NULL) {
             if(compareFrom(getIzq()->getMail()->from,m->from) == 1){
                 if(izq->getMail()->id == m->id) {
-                    nodoMail* lis = getLista();
+                    nodoMail* lis = izq->getLista();
                     nodoMail* aux = izq->izq;
                     nodoMail* aux2 = izq->der;
                     delete izq->mail;
                     delete izq;
                     if(lis != NULL){
-                        izq = getFirstLista();
+                        izq = lis;
                         izq->put(aux,1);
                         izq->put(aux2,1);
                         return;
@@ -703,13 +652,13 @@ void nodoMail::deleteMail(email* m){
     if(der != NULL) {
         if(compareFrom(getDer()->getMail()->from,m->from) == 1){
             if(der->getMail()->id == m->id) {
-                nodoMail* lis = getLista();
+                nodoMail* lis = der->getLista();
                 nodoMail* aux = der->der;
                 nodoMail* aux2 = der->izq;
                 delete der->mail;
                 delete der;
                 if(lis != NULL){
-                    der = getFirstLista();
+                    der = lis;
                     der->put(aux,1);
                     der->put(aux2,1);
                     return;
@@ -731,15 +680,6 @@ void nodoMail::deleteMail(email* m){
     return;
 }
 
-nodoMail* nodoMail::getFirstLista(){
-    if(lista == NULL){
-        return NULL;
-    }
-    nodoMail* tmp = lista;
-    lista = lista->getNext();
-    return tmp;
-}
-
 nodoMail* nodoMail::addLista(email n){
     nodoMail* aux = new nodoMail(n);
     aux->setNext(lista);
@@ -748,6 +688,7 @@ nodoMail* nodoMail::addLista(email n){
 }
 
 nodoMail* nodoMail::addLista(nodoMail* n){
+    if(n == NULL)return NULL;
     nodoMail* aux = new nodoMail(n->getMail());
     aux->setNext(lista);
     lista = aux;

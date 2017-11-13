@@ -74,7 +74,6 @@ public:
     void get(vector<unsigned long>* A,char* texto, int len);
     void remove(char* pa,int lar, unsigned long d);
     void put(nodoPalabra* A);
-    nodoPalabra* getFirstLista();
     void deleteLista(unsigned long d);
     void addLista(nodoPalabra* A);
     void getLista(vector<unsigned long>* A);
@@ -89,7 +88,6 @@ public:
     void add(char* pa,int lar, unsigned long d);
     void get(vector<unsigned long>* A,char* texto, int len);
     void remove(char* pa,int lar, unsigned long d);
-    void put(nodoPalabra* A);
 };
 
 int comparaPalabra(char* A,char* B,int largo);

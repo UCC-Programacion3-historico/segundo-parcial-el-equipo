@@ -23,17 +23,21 @@ void MailManager::addMail(email m) {
  * @param id identificador del mail a borrar
  */
 void MailManager::deleteMail(unsigned long id) {
-    email* A =  NULL;
+    email* A = NULL;
     try{
         A = arbolId.deleteNodo(id);
-        tabla.deletePalabras(A);
         A = arbolDate.deleteNodoDate(A);
+        tabla.deletePalabras(A);
         arbolFrom.deleteMail(A);
     }catch(int e){
-        puts("error 1");
+        if(e == 1){
+            puts("Error al borrar un mail.");
+        }
+        if(e == 2){
+            puts("Hay palabras de mas");
+        }
     }
 }
-
 
 /**
  * Devuelve una lista de mails ordenados por fecha
@@ -93,8 +97,13 @@ vector<email> MailManager::getByQuery(string query) {
     vector<email> ret;
     char *texto = (char*)query.c_str();
     vector<unsigned long> aux;
-    tabla.get(&aux,texto);
-
+    try{
+        tabla.get(&aux,texto);
+    }catch(int e){
+        if(e == 1){
+            puts("Palabra invalida");
+        }
+    }
     while(aux.empty() != 1){
         ret.push_back(*arbolId.getId(aux.back()));
         aux.pop_back();
