@@ -6,5 +6,9 @@
         <file>img/search-icon.png</file>
         <file>main.cpp</file>
         <file>CustomBorder.qml</file>
+        <file>TimePicker.qml</file>
+        <file>img/ic_arrow_back_white_24px.svg</file>
+        <file>img/ic_keyboard_arrow_down_white_24px.svg</file>
+        <file>img/ic_keyboard_arrow_down_bluegray_24px.svg</file>
     </qresource>
 </RCC>

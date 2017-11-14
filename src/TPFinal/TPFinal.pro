@@ -3,7 +3,13 @@ TEMPLATE = app
 QT += qml quick
 CONFIG += c++11
 
-SOURCES += main.cpp
+SOURCES += main.cpp \
+    email.cpp \
+    arbolmail.cpp \
+    arbolpalabras.cpp \
+    MailManager.cpp \
+    tablapalabras.cpp \
+    handler.cpp
 
 RESOURCES += qml.qrc
 
@@ -30,3 +36,11 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
 
 DISTFILES +=
+
+HEADERS += \
+    email.h \
+    arbolmail.h \
+    arbolpalabras.h \
+    MailManager.h \
+    tablapalabras.h \
+    handler.h
