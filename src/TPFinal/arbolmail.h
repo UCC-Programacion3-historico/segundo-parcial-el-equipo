@@ -86,7 +86,6 @@ private:
     nodoMail* raiz;
 public:
     arbolMail();
-    ~arbolMail();
 
     nodoMail* put(email n,int modo);
     nodoMail* put(nodoMail* n,int modo);

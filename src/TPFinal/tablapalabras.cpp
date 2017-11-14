@@ -110,6 +110,11 @@ void tablaPalabras::get(vector<unsigned long>* A,char* texto){
     arbolTexto[(len%SIZE_TABLA)].get(A,texto,len);
 }
 
+/**
+ * Devuelve el largo de una palabra hasta caracter distinto a una letra
+ * @param A char* a la palabra
+ * @return entero positivo del largo de la palabra
+ */
 int largoPalabra(char* A){
     char* tmp = A;
     int cont = 0;

@@ -17,7 +17,6 @@ void MailManager::addMail(email m) {
     tabla.add(arbolFrom.put(arbolDate.put(arbolId.put(m,2),0),1));
 }
 
-
 /**
  * Elimina un mail del gestor
  * @param id identificador del mail a borrar
@@ -63,7 +62,6 @@ vector<email> MailManager::getSortedByDate(string desde, string hasta) {
     arbolDate.getFiltered(&ret,a,b);
     return ret;
 }
-
 
 /**
  * Devuelve una lista de mails ordenados por Remitente

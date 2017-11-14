@@ -1,13 +1,20 @@
 #include "arbolmail.h"
-
+/**
+ * Constructor
+ */
 arbolMail::arbolMail() {
     raiz = NULL;
 }
 
-arbolMail::~arbolMail() {
-
-}
-
+/**
+ * Agrega un mail al arbol, creando un nodo.
+ * @param n mail a agregar
+ * @param modo indica el tipo de insercion, ependiendo del arbol
+ *  modo = 0 para arbol de fechas
+ *  modo = 1 para arbol de remitentes
+ *  modo = 2 para arbol de id
+ * @return devuelve un puntero al nodo agregado
+ */
 nodoMail* arbolMail::put(email n,int modo) {
     if (raiz == NULL) {
         raiz = new nodoMail(n);
@@ -27,6 +34,15 @@ nodoMail* arbolMail::put(email n,int modo) {
     return raiz->getDer();
 }
 
+/**
+ * Agrega un nodo ya existente al arbol
+ * @param n nodo a agregar
+ * @param modo indica el tipo de insercion, ependiendo del arbol
+ *  modo = 0 para arbol de fechas
+ *  modo = 1 para arbol de remitentes
+ *  modo = 2 para arbol de id
+ * @return devuelve un puntero al nodo agregado
+ */
 nodoMail* arbolMail::put(nodoMail* n,int modo) {
     if(n == NULL){
         return NULL;
@@ -83,6 +99,10 @@ nodoMail* arbolMail::put(nodoMail* n,int modo) {
     return raiz->getDer();
 }
 
+/**
+ * Devuelve todo el arbol ordenado en el vector A
+ * @param A vector de mails
+ */
 void arbolMail::getAll(vector<email> *A) {
     if(raiz == NULL) {
         A->clear();
@@ -91,6 +111,12 @@ void arbolMail::getAll(vector<email> *A) {
     raiz->getAll(A);
 }
 
+/**
+ * Devuelve todos los mails que esten en el rango de desde-hasta
+ * @param A vector de mails para return
+ * @param desde
+ * @param hasta
+ */
 void arbolMail::getFiltered(vector<email>* A,unsigned long desde,unsigned long hasta) {
     if(raiz == NULL) {
         A->clear();
@@ -99,6 +125,11 @@ void arbolMail::getFiltered(vector<email>* A,unsigned long desde,unsigned long h
     raiz->getFiltered(A,desde,hasta);
 }
 
+/**
+ * Devuelve un vector con todos los mails de un remitente
+ * @param A vector de mails
+ * @param dat remitente
+ */
 void arbolMail::getByFrom(vector<email>* A,string dat) {
     if(raiz == NULL) {
         A->clear();
@@ -107,6 +138,11 @@ void arbolMail::getByFrom(vector<email>* A,string dat) {
     raiz->getByFrom(A,dat);
 }
 
+/**
+ * Busca un mail en el arbol de id y devuelve un puntero a ese mail
+ * @param d id del mail a buscar
+ * @return puntero al mail. NULL si no existe
+ */
 email* arbolMail::getId(unsigned long d){
     if(raiz == NULL){
         return NULL;
@@ -114,6 +150,11 @@ email* arbolMail::getId(unsigned long d){
     return raiz->getId(d);
 }
 
+/**
+ * Destruye un nodo del arbol de id y devuelve un puntero al mail
+ * @param id del mail
+ * @return puntero al mail
+ */
 email* arbolMail::deleteNodo(unsigned long id){
     if(raiz == NULL) {
         return NULL;
@@ -169,6 +210,11 @@ email* arbolMail::deleteNodo(unsigned long id){
     return NULL;
 }
 
+/**
+ * destuye un nodo del arbol de fechas y devuelve un puntero al mail
+ * @param m puntero del mail que se debe destruir
+ * @return puntero al mail
+ */
 email* arbolMail::deleteNodoDate(email *m){
     if(m == NULL){
         throw 1;
@@ -257,6 +303,10 @@ email* arbolMail::deleteNodoDate(email *m){
     return NULL;
 }
 
+/**
+ * Destruye un mail y el nodo del arbol de remitentes
+ * @param m puntero del mal a destruir
+ */
 void arbolMail::deleteMail(email* m){
     if(m == NULL) {
         throw 1;
@@ -353,6 +403,15 @@ void arbolMail::deleteMail(email* m){
     return;
 }
 
+/**
+ * Agrega un mail al arbol, creando un nodo.
+ * @param n mail a agregar
+ * @param modo indica el tipo de insercion, ependiendo del arbol
+ *  modo = 0 para arbol de fechas
+ *  modo = 1 para arbol de remitentes
+ *  modo = 2 para arbol de id
+ * @return devuelve un puntero al nodo agregado
+ */
 nodoMail* nodoMail::put(email n,int modo) {
     if(modo == 0) {
         if(n.getDateScore() < this->mail->getDateScore()) {
@@ -402,6 +461,15 @@ nodoMail* nodoMail::put(email n,int modo) {
     return der;
 }
 
+/**
+ * Agrega un nodo ya existente al arbol
+ * @param n nodo a agregar
+ * @param modo indica el tipo de insercion, ependiendo del arbol
+ *  modo = 0 para arbol de fechas
+ *  modo = 1 para arbol de remitentes
+ *  modo = 2 para arbol de id
+ * @return devuelve un puntero al nodo agregado
+ */
 nodoMail* nodoMail::put(nodoMail* n,int modo) {
     if(n == NULL) return NULL;
     if(modo == 0) {
@@ -455,6 +523,10 @@ nodoMail* nodoMail::put(nodoMail* n,int modo) {
     return der;
 }
 
+/**
+ * Devuelve todo el arbol ordenado en el vector A
+ * @param A vector de mails
+ */
 void nodoMail::getAll(vector<email> *A) {
     if(izq != NULL) {
         izq->getAll(A);
@@ -465,6 +537,12 @@ void nodoMail::getAll(vector<email> *A) {
     }
 }
 
+/**
+ * Devuelve todos los mails que esten en el rango de desde-hasta
+ * @param A vector de mails para return
+ * @param desde
+ * @param hasta
+ */
 void nodoMail::getFiltered(vector<email>* A,unsigned long desde,unsigned long hasta) {
     if(mail->getDateScore() >= desde) {
         if(izq != NULL) {
@@ -480,6 +558,11 @@ void nodoMail::getFiltered(vector<email>* A,unsigned long desde,unsigned long ha
     return;
 }
 
+/**
+ * Devuelve un vector con todos los mails de un remitente
+ * @param A vector de mails
+ * @param dat remitente
+ */
 void nodoMail::getByFrom(vector<email>* A,string dat) {
     switch (compareFrom(this->getMail()->from,dat)) {
     case 0:
@@ -500,6 +583,11 @@ void nodoMail::getByFrom(vector<email>* A,string dat) {
     }
 }
 
+/**
+ * Busca un mail en el arbol de id y devuelve un puntero a ese mail
+ * @param d id del mail a buscar
+ * @return puntero al mail. NULL si no existe
+ */
 email* nodoMail::getId(unsigned long d){
     if(d < getMail()->id){
         if(izq != NULL){
@@ -519,6 +607,11 @@ email* nodoMail::getId(unsigned long d){
     return NULL;
 }
 
+/**
+ * Destruye un nodo del arbol de id y devuelve un puntero al mail
+ * @param id del mail
+ * @return puntero al mail
+ */
 email* nodoMail::deleteNodo(unsigned long id){
     if(id < this->getMail()->id) {
         if(izq != NULL){
@@ -558,6 +651,11 @@ email* nodoMail::deleteNodo(unsigned long id){
     return NULL;
 }
 
+/**
+ * destuye un nodo del arbol de fechas y devuelve un puntero al mail
+ * @param m puntero del mail que se debe destruir
+ * @return puntero al mail
+ */
 email* nodoMail::deleteNodoDate(email* m) {
     if(this->getMail()->getDateScore() > m->getDateScore()) {
         if(izq != NULL) {
@@ -617,6 +715,10 @@ email* nodoMail::deleteNodoDate(email* m) {
     return NULL;
 }
 
+/**
+ * Destruye un mail y el nodo del arbol de remitentes
+ * @param m puntero del mal a destruir
+ */
 void nodoMail::deleteMail(email* m){
     if(compareFrom(this->getMail()->from,m->from) == 2){
         if(izq != NULL) {
@@ -680,6 +782,11 @@ void nodoMail::deleteMail(email* m){
     return;
 }
 
+/**
+ * Agrega un mail a la lista del nodo
+ * @param n email a agregar
+ * @return devuelve un puntero al nodo agregagdo
+ */
 nodoMail* nodoMail::addLista(email n){
     nodoMail* aux = new nodoMail(n);
     aux->setNext(lista);
@@ -687,6 +794,11 @@ nodoMail* nodoMail::addLista(email n){
     return lista;
 }
 
+/**
+ * Agrega un nuevo nodo a la lista
+ * @param n nodo a agregar
+ * @return devuelve un puntero al nodo agregado
+ */
 nodoMail* nodoMail::addLista(nodoMail* n){
     if(n == NULL)return NULL;
     nodoMail* aux = new nodoMail(n->getMail());
@@ -695,6 +807,11 @@ nodoMail* nodoMail::addLista(nodoMail* n){
     return lista;
 }
 
+/**
+ * Busca un mail con la id en la lista y lo elimina
+ * @param d id del mail a eliminar
+ * @return puntero al mail por eliminar
+ */
 email* nodoMail::deleteLista(unsigned long d){
     if(lista == NULL)return NULL;
 
@@ -719,6 +836,10 @@ email* nodoMail::deleteLista(unsigned long d){
     return NULL;
 }
 
+/**
+ * Devuelve toda la lista en el vector A
+ * @param A vector de mails
+ */
 void nodoMail::getLista(vector<email>* A){
     A->push_back(*getMail());
     if(lista == NULL){
