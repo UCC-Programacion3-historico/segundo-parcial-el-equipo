@@ -18,7 +18,8 @@ Window {
 
     // SIGNAL FUNCTIONS
 
-    signal addNewMailQMLSignal(string from, string to, string date, string subject, string content, bool sortedByDate);
+    signal addNewMailQMLSignal(string from, string to, string date,
+                               string subject, string content, bool sortedByDate);
 
 
     // SLOT FUNCTIONS
@@ -445,6 +446,8 @@ Window {
             anchors.top: searchBoxContainer.bottom
             anchors.left: parent.left
             enabled: true
+
+
             model: ListModel {
 
                 id: mailListModel
@@ -1718,13 +1721,13 @@ Window {
                         var m_date = Qt.formatDate(calendar.selectedDate, "yyyy MM dd")
                         var m_time = timeLabel.text === "Hora" ? ('00' + currentDate.getHours()).slice(-2) + ":" + ('00' + currentDate.getMinutes()).slice(-2) : timeLabel.text;
 
-                        addNewMailSlot(
+                        addNewMailQMLSignal(
                                     mailToTextInput.text,
                                     mailFromTextInput.text,
                                     m_date + " " + m_time,
                                     subjectTextInput.text,
                                     mailBodyTextEdit.text,
-                                    true);  //sortedByDate
+                                    true);  //sortedByDate*/
 
                         //console.log(mailListModel.get(mailListModel.count-1).content);
 

@@ -3,6 +3,11 @@
 
 #include <QObject>
 #include <QDebug>
+#include <vector>
+
+#include "MailManager.h"
+#include "email.h"
+
 
 class Handler : public QObject
 {
@@ -11,17 +16,25 @@ class Handler : public QObject
 public:
     explicit Handler(QObject *parent = 0);
 
-    void addMail(QString, QString);
+    void addNewMail(email);
     void initListView();
+    void updateListView();
 
 private:
-    QList<QString> mailList;
+
+    MailManager mailManager;
+    vector<email> mailListToRender;
+    email mailToAdd;
+    int count;
 
 public slots:
-    void slotClear();
+    void addNewMailCPPSlot(const QString &from, const QString &to,
+                            const QString &date, const QString &subject, const QString &content, const bool sortedByDate);
 
 signals:
-    void clearListSignal();
+    void clearListCPPSignal();
+    void addItemToListViewCPPSignal(QVariant id, QVariant from, QVariant to,
+                               QVariant date, QVariant subject, QVariant content, QVariant isRead);
 };
 
 #endif // HANDLER_H
