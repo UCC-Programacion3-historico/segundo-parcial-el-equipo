@@ -712,6 +712,12 @@ Window {
                 }
 
                 onTextChanged: {
+
+                    setMailsIntervalContainer.firstOfIntervalDate = new Date();
+                    setMailsIntervalContainer.lastOfIntervalDate = new Date();
+                    setMailsIntervalContainer.siempreSelected = true;
+                    setMailsIntervalContainer.setMailsInterval();
+
                     if (text !== "") {
                         if (text.includes('@')) {
 
@@ -848,6 +854,11 @@ Window {
 
                         sortByRectangle.state = "sortByDateButtonPressed";
 
+                        setMailsIntervalContainer.firstOfIntervalDate = new Date();
+                        setMailsIntervalContainer.lastOfIntervalDate = new Date();
+                        setMailsIntervalContainer.siempreSelected = true;
+                        setMailsIntervalContainer.setMailsInterval();
+
                         sortedByDate = true;
                         lastSignal = 0;
                         sortByDateQMLSignal();
@@ -891,6 +902,11 @@ Window {
                     onClicked: {
 
                         sortByRectangle.state = "sortBySenderButtonPressed";
+
+                        setMailsIntervalContainer.firstOfIntervalDate = new Date();
+                        setMailsIntervalContainer.lastOfIntervalDate = new Date();
+                        setMailsIntervalContainer.siempreSelected = true;
+                        setMailsIntervalContainer.setMailsInterval();
 
                         sortedByDate = false;
                         lastSignal = 0;
