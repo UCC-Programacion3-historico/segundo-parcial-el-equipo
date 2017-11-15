@@ -2,7 +2,7 @@
 #define ARBOLMAIL_H
 
 #include "email.h"
-
+#include "vector"
 
 class nodoMail {
 private:

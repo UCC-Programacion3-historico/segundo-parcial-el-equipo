@@ -8,12 +8,19 @@ MailManager::MailManager() {
 
 }
 
-
 /**
  * Agrega un mail al gestor
  * @param m mail a agregar
  */
 void MailManager::addMail(email m) {
+    m.id = idMatriz[coordNum[0]]*1000000 + idMatriz[coordNum[1]]*100000 + idMatriz[coordNum[2]]*10000 + idMatriz[coordNum[3]] * 1000 + idMatriz[coordNum[4]]*100  + idMatriz[coordNum[5]]*10 + idMatriz[coordNum[6]];
+    coordNum[0]++;
+    for(int i = 0;i<7;i++){
+        if(coordNum[i] > 6){
+            coordNum[i] = 0;
+            coordNum[i+1]++;
+        }
+    }
     tabla.add(arbolFrom.put(arbolDate.put(arbolId.put(m,2),0),1));
 }
 

@@ -1,7 +1,6 @@
 #ifndef EMAIL_H
 #define EMAIL_H
 #include <string>
-#include <vector>
 using namespace std;
 
 /**

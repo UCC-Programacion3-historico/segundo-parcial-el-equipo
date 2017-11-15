@@ -57,7 +57,6 @@ void MainWindow::on_act_button_clicked()
     vector<email> A;
     QString aux;
     A = MM->getSortedByFrom();
-    //A = MM->getByQuery("Hola");
 
     switch (A.size()) {
     default:
@@ -107,7 +106,7 @@ void MainWindow::on_pushButton_3_clicked(){
 
 void MainWindow::on_pushButton_2_clicked()
 {
-    MM->deleteMail(cont-1);
+    MM->deleteMail(1333333);
     cont--;
     if(cont < 0){
         cont = 0;
