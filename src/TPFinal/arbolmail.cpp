@@ -470,7 +470,7 @@ nodoMail* nodoMail::put(email n,int modo) {
  *  modo = 2 para arbol de id
  * @return devuelve un puntero al nodo agregado
  */
-nodoMail* nodoMail::put(nodoMail* n,int modo) {
+nodoMail* nodoMail::put(nodoMail* &n,int modo) {
     if(n == NULL) return NULL;
     if(modo == 0) {
         if(n->getMail()->getDateScore() < mail->getDateScore()) {

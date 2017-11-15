@@ -66,7 +66,7 @@ public:
     }
 
     nodoMail* put(email n,int modo);
-    nodoMail* put(nodoMail* n,int modo);
+    nodoMail* put(nodoMail* &n,int modo);
     void getAll(vector<email>* A);
     void getFiltered(vector<email>* A,unsigned long desde,unsigned long hasta);
     void getByFrom(vector<email>* A,string dat);
