@@ -74,9 +74,11 @@ public:
     email* deleteNodo(unsigned long id);
     email* deleteNodoDate(email* m);
     void deleteMail(email* m);
+    nodoMail* agregar(nodoMail* &n,int modo);
     nodoMail* getFirstLista();
     nodoMail* addLista(email n);
     nodoMail* addLista(nodoMail* n);
+    nodoMail* agregarLista(nodoMail* n);
     email* deleteLista(unsigned long d);
     void getLista(vector<email>* A);
 };

@@ -106,7 +106,7 @@ void MainWindow::on_pushButton_3_clicked(){
 
 void MainWindow::on_pushButton_2_clicked()
 {
-    MM->deleteMail(2333333);
+    MM->deleteMail(1333333);
     cont--;
     if(cont < 0){
         cont = 0;
