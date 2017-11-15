@@ -528,12 +528,12 @@ nodoMail* nodoMail::put(nodoMail* n,int modo) {
  * @param A vector de mails
  */
 void nodoMail::getAll(vector<email> *A) {
-    if(izq != NULL) {
-        izq->getAll(A);
-    }
-    getLista(A);
     if(der != NULL) {
         der->getAll(A);
+    }
+    getLista(A);
+    if(izq != NULL) {
+        izq->getAll(A);
     }
 }
 
@@ -544,14 +544,14 @@ void nodoMail::getAll(vector<email> *A) {
  * @param hasta
  */
 void nodoMail::getFiltered(vector<email>* A,unsigned long desde,unsigned long hasta) {
-    if(mail->getDateScore() >= desde) {
-        if(izq != NULL) {
-            izq->getFiltered(A,desde,hasta);
+    if(mail->getDateScore() <= hasta) {
+        if(der != NULL) {
+            der->getFiltered(A,desde,hasta);
         }
-        if(mail->getDateScore() <= hasta) {
+        if(mail->getDateScore() >= desde) {
             getLista(A);
-            if(der != NULL) {
-                der->getFiltered(A,desde,hasta);
+            if(izq != NULL) {
+                izq->getFiltered(A,desde,hasta);
             }
         }
     }

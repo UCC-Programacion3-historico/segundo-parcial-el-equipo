@@ -30,6 +30,13 @@ private:
 public slots:
     void addNewMailCPPSlot(const QString &from, const QString &to,
                             const QString &date, const QString &subject, const QString &content, const bool sortedByDate);
+    void setMailsDateIntervalCPPSlot(const QString &since, const QString &to);
+
+    void sortByDateCPPSlot();
+    void sortBySenderCPPSlot();
+
+    void searchByQueryCPPSlot(const QString &query);
+    void searchBySenderCPPSlot(const QString &sender);
 
 signals:
     void clearListCPPSignal();

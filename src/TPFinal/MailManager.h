@@ -21,6 +21,9 @@ private:
     arbolMail arbolId;
 
     tablaPalabras tabla;
+
+    int idMatriz[7] = {3,1,5,0,2,4,6};
+    int coordNum[7] = {0,0,0,0,0,0,0};
 public:
     MailManager();
 

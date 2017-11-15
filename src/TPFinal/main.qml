@@ -13,6 +13,18 @@ Window {
     minimumHeight: 500
     minimumWidth: 700
 
+    property bool sortedByDate: true
+    property int lastSignal: 0
+
+    /*
+    MAIL SIGNAL IDs:
+
+    0 -> general (empty inbox)
+    1 -> setMailsInterval
+    2 -> searchByQuery
+    3 -> searchBySender
+    */
+
     title: qsTr("Mail Manager | PROGRAMACION III - PARCIAL 2")
 
 
@@ -21,20 +33,45 @@ Window {
     signal addNewMailQMLSignal(string from, string to, string date,
                                string subject, string content, bool sortedByDate);
 
+    signal setMailsIntervalQMLSignal(string since, string to);
+
+    signal sortByDateQMLSignal();
+    signal sortBySenderQMLSignal();
+
+    signal searchByQueryQMLSignal(string query);
+    signal searchBySenderQMLSignal(string sender);
+
 
     // SLOT FUNCTIONS
 
     function clearListQMLSlot() {
-        mailListModel.clear()
+        mailListModel.clear();
+
+        noResultsRectangle.visible = true;
+
+        if (lastSignal === 0) {
+            noResultsHeaderText.text = "No tienes ningún mail aun :(";
+            noResultSearchText.text = "";
+        }
+        else if (lastSignal === 1) {
+            noResultsHeaderText.text = "No se encontraron mails en el intervalo solicitado";
+            noResultSearchText.text = "";
+        }
+        else if (lastSignal === 2) {
+            noResultsHeaderText.text = "No se encontraron mails con la palabra:";
+            noResultSearchText.text = "'" + searchTextInput.text + "'";
+        }
+        else if (lastSignal === 3) {
+            noResultsHeaderText.text = "No se encontraron mails de:";
+            noResultSearchText.text = "'" + searchTextInput.text + "'";
+        }
     }
 
     function updateListQMLSlot(id, from, to, date, subject, content, isRead) {
 
-        var year = date.substring(0, 4);
+        var year = date.substring(2, 4);
         var month = date.substring(5, 7);
         var day = date.substring(8, 10);
-
-        //var m_date = date.substring(0, 10);
 
         var m_time = date.substring(11, date.length);
 
@@ -48,6 +85,8 @@ Window {
                         time: m_time,
                         content: content
                     });
+
+        noResultsRectangle.visible = false;
     }
 
 
@@ -71,6 +110,38 @@ Window {
             radius: 8.0
             color: "#80000000"
 
+        }
+
+        Rectangle {
+            id: noResultsRectangle
+
+            width: parent.width - 40
+            height: 70
+
+            color: 'transparent'
+
+            anchors.horizontalCenter: parent.horizontalCenter
+            anchors.top: sortByRectangle.bottom
+            anchors.topMargin: 20
+
+            Text {
+                id: noResultsHeaderText
+
+                anchors.centerIn: parent
+                color: "#424242"
+
+                text: "No tienes ningún mail aun :("
+            }
+
+            Text {
+                id: noResultSearchText
+
+                anchors.horizontalCenter: parent.horizontalCenter
+                anchors.top: noResultsHeaderText.bottom
+                anchors.topMargin: 5
+
+                color: "#424242"
+            }
         }
 
         Shortcut {
@@ -443,7 +514,7 @@ Window {
             boundsBehavior: Flickable.DragAndOvershootBounds
             anchors.right: parent.right
             anchors.bottom: footer.top
-            anchors.top: searchBoxContainer.bottom
+            anchors.top: sortByRectangle.bottom
             anchors.left: parent.left
             enabled: true
 
@@ -585,17 +656,11 @@ Window {
 
         Rectangle {
             id: searchBoxContainer
-            x: 0
-            y: 0
-            width: 304
+            z: 4
+            width: parent.width
             height: 76
             color: "#ffffff"
-            anchors.topMargin: 0
             anchors.top: parent.top
-            anchors.rightMargin: 0
-            anchors.leftMargin: 0
-            anchors.right: parent.right
-            anchors.left: parent.left
             enabled: true
 
             CustomBorder {
@@ -604,8 +669,8 @@ Window {
                 lBorderwidth: 0
                 rBorderwidth: 0
                 tBorderwidth: 0
-                bBorderwidth: 2
-                borderColor: "#bcbcbc"
+                bBorderwidth: 1
+                borderColor: "#607D8B"
             }
 
 
@@ -622,15 +687,11 @@ Window {
 
             TextInput {
                 id: searchTextInput
-                x: 67
-                y: 29
-                width: 235
-                height: 18
+
+                anchors.fill: parent
                 text: "Buscar"
-                autoScroll: true
-                cursorVisible: false
-                renderType: Text.QtRendering
-                topPadding: 0
+                topPadding: 30
+                leftPadding: 65
                 font.weight: Font.Light
                 font.bold: false
                 font.family: "Arial"
@@ -648,6 +709,204 @@ Window {
                     else {
                         text = "Buscar";
                     }
+                }
+
+                onTextChanged: {
+                    if (text !== "") {
+                        if (text.includes('@')) {
+
+                            lastSignal = 3;
+                            searchBySenderQMLSignal(text);
+                        }
+                        else {
+                            lastSignal = 2;
+                            searchByQueryQMLSignal(text)
+                        }
+                    }
+                    else {
+                        if (sortedByDate) {
+                            lastSignal = 0;
+                            sortByDateQMLSignal();
+                        }
+                        else {
+                            lastSignal = 0;
+                            sortBySenderQMLSignal();
+                        }
+                    }
+                }
+            }
+        }
+
+        Rectangle {
+            id: sortByRectangle
+
+            width: parent.width
+            height: 50
+
+            anchors.top: searchBoxContainer.bottom
+
+            z: 3
+
+            color: "#90A4AE"
+
+            CustomBorder {
+                commonBorder: false
+                lBorderwidth: 0
+                rBorderwidth: 0
+                tBorderwidth: 0
+                bBorderwidth: 1
+                borderColor: "#607D8B"
+            }
+
+            Text {
+                id: sortByLabel
+                anchors.verticalCenter: parent.verticalCenter
+                anchors.left: parent.left
+                anchors.leftMargin: 10
+
+                text: "ORDENAR POR"
+                font.pixelSize: 15
+                color: 'white'
+            }
+
+            state: "sortByDateButtonPressed"
+
+            states: [
+                State {
+                    name: "sortByDateButtonPressed"
+
+                    PropertyChanges {
+                        target: sortByDateButtonRectangle
+                        color: "white"
+                    }
+
+                    PropertyChanges {
+                        target: sortByDateButtonText
+                        color: "#90A4AE"
+
+                    }
+
+                    PropertyChanges {
+                        target: sortBySenderButtonRectangle
+                        color: sortBySenderButtonMouseArea.containsMouse ? '#15000000': 'transparent'
+                    }
+
+                    PropertyChanges {
+                        target: sortBySenderButtonText
+                        color: "#60FFFFFF"
+                    }
+                },
+                State {
+                    name: "sortBySenderButtonPressed"
+
+                    PropertyChanges {
+                        target: sortBySenderButtonRectangle
+                        color: 'white'
+                    }
+
+                    PropertyChanges {
+                        target: sortBySenderButtonText
+                        color: "#90A4AE"
+                    }
+
+                    PropertyChanges {
+                        target: sortByDateButtonRectangle
+                        color: sortByDateButtonMouseArea.containsMouse ? '#15000000': 'transparent'
+                    }
+
+                    PropertyChanges {
+                        target: sortByDateButtonText
+                        color: "#60FFFFFF"
+                    }
+                }
+            ]
+
+
+            Rectangle {
+                id: sortByDateButtonRectangle
+
+                height: 24
+                width: 60
+
+                radius: 12
+
+                anchors.verticalCenter: parent.verticalCenter
+                anchors.left: sortByLabel.right
+                anchors.leftMargin: 15
+
+                color: sortByDateButtonMouseArea.containsMouse ? '#15000000': 'transparent'
+
+
+                MouseArea {
+
+                    id: sortByDateButtonMouseArea
+
+                    anchors.fill: parent
+                    hoverEnabled: true
+
+                    onClicked: {
+
+                        sortByRectangle.state = "sortByDateButtonPressed";
+
+                        sortedByDate = true;
+                        lastSignal = 0;
+                        sortByDateQMLSignal();
+                    }
+                }
+
+                Text {
+
+                    id: sortByDateButtonText
+
+                    anchors.centerIn: parent
+
+                    text: 'Fecha'
+                    color: '#60FFFFFF'
+                    font.pixelSize: 15
+                }
+            }
+
+            Rectangle {
+                id: sortBySenderButtonRectangle
+
+                height: 24
+                width: 90
+
+                radius: 12
+
+                anchors.verticalCenter: parent.verticalCenter
+                anchors.left: sortByDateButtonRectangle.right
+                anchors.leftMargin: 10
+
+                color: sortBySenderButtonMouseArea.containsMouse ? '#15000000': 'transparent'
+
+
+                MouseArea {
+
+                    id: sortBySenderButtonMouseArea
+
+                    anchors.fill: parent
+                    hoverEnabled: true
+
+                    onClicked: {
+
+                        sortByRectangle.state = "sortBySenderButtonPressed";
+
+                        sortedByDate = false;
+                        lastSignal = 0;
+                        sortBySenderQMLSignal();
+                    }
+                }
+
+                Text {
+
+                    id: sortBySenderButtonText
+
+                    anchors.centerIn: parent
+
+                    text: 'Remitente'
+                    color: '#60FFFFFF'
+                    font.pixelSize: 15
                 }
             }
         }
@@ -1201,11 +1460,11 @@ Window {
 
             function setMailsInterval() {
                 const firstOfIntervalDay = firstOfIntervalDate.getDate();
-                const firstOfIntervalMonth = firstOfIntervalDate.getMonth();
+                const firstOfIntervalMonth = firstOfIntervalDate.getMonth() + 1;
                 const firstOfIntervalYear = firstOfIntervalDate.getFullYear();
 
                 const lastOfIntervalDay = lastOfIntervalDate.getDate();
-                const lastOfIntervalMonth = lastOfIntervalDate.getMonth();
+                const lastOfIntervalMonth = lastOfIntervalDate.getMonth() + 1;
                 const lastOfIntervalYear = lastOfIntervalDate.getFullYear();
 
                 const currentDate = new Date();
@@ -1261,6 +1520,16 @@ Window {
                     }
                 }
 
+                var since;
+                var to = firstOfIntervalYear + " " + ('00' + firstOfIntervalMonth).slice(-2) + " " + ('00' + firstOfIntervalDay).slice(-2);
+
+                if (siempreSelected) since = "0000 01 01";
+                else since = lastOfIntervalYear + " " + ('00' + lastOfIntervalMonth).slice(-2) + " " + ('00' + lastOfIntervalDay).slice(-2);
+
+                console.log(since + " - " + to);
+
+                lastSignal = 1;
+                setMailsIntervalQMLSignal(since ,to);
             }
 
             CustomBorder {
@@ -1720,14 +1989,15 @@ Window {
 
                         var m_date = Qt.formatDate(calendar.selectedDate, "yyyy MM dd")
                         var m_time = timeLabel.text === "Hora" ? ('00' + currentDate.getHours()).slice(-2) + ":" + ('00' + currentDate.getMinutes()).slice(-2) : timeLabel.text;
+                        var subject = subjectTextInput.text === "" ? "(Sin asunto)" : subjectTextInput.text
 
                         addNewMailQMLSignal(
                                     mailToTextInput.text,
                                     mailFromTextInput.text,
                                     m_date + " " + m_time,
-                                    subjectTextInput.text,
+                                    subject,
                                     mailBodyTextEdit.text,
-                                    true);  //sortedByDate*/
+                                    sortedByDate);
 
                         //console.log(mailListModel.get(mailListModel.count-1).content);
 
