@@ -91,7 +91,7 @@ void Handler::searchBySenderCPPSlot(const QString &sender) {
 
 void Handler::deleteMailCPPSlot(const int id, const bool sortedByDate) {
 
-    mailManager.deleteMail(id);
+    mailManager.deleteMail((unsigned long) id);
 
     if (sortedByDate) mailListToRender = mailManager.getSortedByDate();
     else mailListToRender = mailManager.getSortedByFrom();

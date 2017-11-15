@@ -831,7 +831,7 @@ Window {
 
                         onClicked: {
 
-                            mailListView.currentIndex = index
+                            //mailListView.currentIndex = index
 
                             showMailFromContainerText.text = mailListModel.get(index).sender
                             showMailToContainerText.text = mailListModel.get(index).to
@@ -869,12 +869,16 @@ Window {
 
                                 onClicked: {
 
-                                    deleteMailQMLSignal(mailListModel.get(index).ID, sortedByDate);
+                                    var currentId = mailListModel.get(index).ID;
+
+                                    deleteMailQMLSignal(currentId, sortedByDate);
 
                                     setMailsIntervalContainer.firstOfIntervalDate = new Date();
                                     setMailsIntervalContainer.lastOfIntervalDate = new Date();
                                     setMailsIntervalContainer.siempreSelected = true;
                                     setMailsIntervalContainer.setMailsInterval();
+
+                                    //console.log(index + ": " + mailListModel.get(index).ID);
                                 }
 
                             }
