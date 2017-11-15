@@ -678,6 +678,8 @@ qrc_qml.cpp: ../TPFinal/qml.qrc \
 		../TPFinal/img/ic_arrow_back_white_24px.svg \
 		../TPFinal/img/ic_close_red_24px.svg \
 		../TPFinal/img/ic_keyboard_arrow_down_white_24px.svg \
+		../TPFinal/img/ic_delete_black_24px.svg \
+		../TPFinal/img/ic_delete_opened_red_24px.svg \
 		../TPFinal/img/search-icon.png \
 		/Users/GabiParrello/Qt/5.8/clang_64/lib/QtGui.framework/Headers/QGuiApplication \
 		/Users/GabiParrello/Qt/5.8/clang_64/lib/QtGui.framework/Headers/qguiapplication.h \
@@ -690,7 +692,11 @@ qrc_qml.cpp: ../TPFinal/qml.qrc \
 		/Users/GabiParrello/Qt/5.8/clang_64/lib/QtCore.framework/Headers/QObject \
 		/Users/GabiParrello/Qt/5.8/clang_64/lib/QtCore.framework/Headers/qobject.h \
 		/Users/GabiParrello/Qt/5.8/clang_64/lib/QtCore.framework/Headers/QDebug \
-		/Users/GabiParrello/Qt/5.8/clang_64/lib/QtCore.framework/Headers/qdebug.h
+		/Users/GabiParrello/Qt/5.8/clang_64/lib/QtCore.framework/Headers/qdebug.h \
+		../TPFinal/MailManager.h \
+		../TPFinal/arbolmail.h \
+		../TPFinal/tablapalabras.h \
+		../TPFinal/arbolpalabras.h
 	/Users/GabiParrello/Qt/5.8/clang_64/bin/rcc -name qml ../TPFinal/qml.qrc -o qrc_qml.cpp
 
 compiler_moc_predefs_make_all: moc_predefs.h
@@ -706,6 +712,11 @@ moc_handler.cpp: /Users/GabiParrello/Qt/5.8/clang_64/lib/QtCore.framework/Header
 		/Users/GabiParrello/Qt/5.8/clang_64/lib/QtCore.framework/Headers/qobject.h \
 		/Users/GabiParrello/Qt/5.8/clang_64/lib/QtCore.framework/Headers/QDebug \
 		/Users/GabiParrello/Qt/5.8/clang_64/lib/QtCore.framework/Headers/qdebug.h \
+		../TPFinal/MailManager.h \
+		../TPFinal/email.h \
+		../TPFinal/arbolmail.h \
+		../TPFinal/tablapalabras.h \
+		../TPFinal/arbolpalabras.h \
 		../TPFinal/handler.h \
 		moc_predefs.h \
 		/Users/GabiParrello/Qt/5.8/clang_64/bin/moc
@@ -736,7 +747,11 @@ main.o: ../TPFinal/main.cpp /Users/GabiParrello/Qt/5.8/clang_64/lib/QtGui.framew
 		/Users/GabiParrello/Qt/5.8/clang_64/lib/QtCore.framework/Headers/QObject \
 		/Users/GabiParrello/Qt/5.8/clang_64/lib/QtCore.framework/Headers/qobject.h \
 		/Users/GabiParrello/Qt/5.8/clang_64/lib/QtCore.framework/Headers/QDebug \
-		/Users/GabiParrello/Qt/5.8/clang_64/lib/QtCore.framework/Headers/qdebug.h
+		/Users/GabiParrello/Qt/5.8/clang_64/lib/QtCore.framework/Headers/qdebug.h \
+		../TPFinal/MailManager.h \
+		../TPFinal/arbolmail.h \
+		../TPFinal/tablapalabras.h \
+		../TPFinal/arbolpalabras.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o main.o ../TPFinal/main.cpp
 
 email.o: ../TPFinal/email.cpp ../TPFinal/email.h
@@ -768,7 +783,12 @@ handler.o: ../TPFinal/handler.cpp ../TPFinal/handler.h \
 		/Users/GabiParrello/Qt/5.8/clang_64/lib/QtCore.framework/Headers/QObject \
 		/Users/GabiParrello/Qt/5.8/clang_64/lib/QtCore.framework/Headers/qobject.h \
 		/Users/GabiParrello/Qt/5.8/clang_64/lib/QtCore.framework/Headers/QDebug \
-		/Users/GabiParrello/Qt/5.8/clang_64/lib/QtCore.framework/Headers/qdebug.h
+		/Users/GabiParrello/Qt/5.8/clang_64/lib/QtCore.framework/Headers/qdebug.h \
+		../TPFinal/MailManager.h \
+		../TPFinal/email.h \
+		../TPFinal/arbolmail.h \
+		../TPFinal/tablapalabras.h \
+		../TPFinal/arbolpalabras.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o handler.o ../TPFinal/handler.cpp
 
 qrc_qml.o: qrc_qml.cpp 

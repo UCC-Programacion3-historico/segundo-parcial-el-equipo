@@ -27,7 +27,7 @@ void Handler::updateListView() {
 
     for (int i=0; i < mailListToRender.size(); i++) {
         emit addItemToListViewCPPSignal(
-                        QVariant::fromValue(mailListToRender[i].id),
+                        (int) (mailListToRender[i].id),
                         QString::fromStdString(mailListToRender[i].from),
                         QString::fromStdString(mailListToRender[i].to),
                         QString::fromStdString(mailListToRender[i].date),
@@ -36,6 +36,8 @@ void Handler::updateListView() {
                         mailListToRender[i].isRead
                     );
     }
+
+    if (mailListToRender.size() == 0) emit clearShowMailCPPSignal();
 }
 
 void Handler::addNewMailCPPSlot(const QString &from, const QString &to, const QString &date,
@@ -47,7 +49,6 @@ void Handler::addNewMailCPPSlot(const QString &from, const QString &to, const QS
     toAdd.date = date.toStdString();
     toAdd.subject = subject.toStdString();
     toAdd.content = content.toStdString();
-    toAdd.id = count++;
 
     addNewMail(toAdd);
 
@@ -85,5 +86,15 @@ void Handler::searchByQueryCPPSlot(const QString &query) {
 void Handler::searchBySenderCPPSlot(const QString &sender) {
 
     mailListToRender = mailManager.getByFrom(sender.toStdString());
+    updateListView();
+}
+
+void Handler::deleteMailCPPSlot(const int id, const bool sortedByDate) {
+
+    mailManager.deleteMail(id);
+
+    if (sortedByDate) mailListToRender = mailManager.getSortedByDate();
+    else mailListToRender = mailManager.getSortedByFrom();
+
     updateListView();
 }

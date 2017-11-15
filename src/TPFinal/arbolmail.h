@@ -2,7 +2,7 @@
 #define ARBOLMAIL_H
 
 #include "email.h"
-
+#include "vector"
 
 class nodoMail {
 private:
@@ -66,7 +66,7 @@ public:
     }
 
     nodoMail* put(email n,int modo);
-    nodoMail* put(nodoMail* n,int modo);
+    nodoMail* put(nodoMail* &n,int modo);
     void getAll(vector<email>* A);
     void getFiltered(vector<email>* A,unsigned long desde,unsigned long hasta);
     void getByFrom(vector<email>* A,string dat);
@@ -74,9 +74,11 @@ public:
     email* deleteNodo(unsigned long id);
     email* deleteNodoDate(email* m);
     void deleteMail(email* m);
+    nodoMail* agregar(nodoMail* &n,int modo);
     nodoMail* getFirstLista();
     nodoMail* addLista(email n);
     nodoMail* addLista(nodoMail* n);
+    nodoMail* agregarLista(nodoMail* n);
     email* deleteLista(unsigned long d);
     void getLista(vector<email>* A);
 };

@@ -41,8 +41,18 @@ Window {
     signal searchByQueryQMLSignal(string query);
     signal searchBySenderQMLSignal(string sender);
 
+    signal deleteMailQMLSignal(int id, bool sortedByDate);
+
 
     // SLOT FUNCTIONS
+
+    function clearShowMailQMLSlot() {
+
+            showMailFromContainerText.text = "";
+            showMailToContainerText.text = "";
+            showMailSubjectContainerText.text = "";
+            showMailContentContainerText.text = "";
+    }
 
     function clearListQMLSlot() {
         mailListModel.clear();
@@ -89,6 +99,223 @@ Window {
         noResultsRectangle.visible = false;
     }
 
+    Rectangle {
+        id: showMailContainer
+
+        height: parent.height
+        width: parent.width - mailListContainer.width
+
+        anchors.left: mailListContainer.right
+
+        Rectangle {
+            id: steticTopRectangle
+
+            width: parent.width
+            height: parent.height/2
+
+            anchors.top: parent.top
+
+            color: "#00ACC1"
+        }
+
+        Rectangle {
+            id: steticBottomRectangle
+
+            width: parent.width
+            height: parent.height / 2
+
+            anchors.bottom: parent.bottom
+
+            color: "#0097A7"
+        }
+
+        Rectangle {
+            id: showMailFromContainer
+
+            width: parent.width - 100
+            height: 50
+
+            radius: 5
+            anchors.horizontalCenter: parent.horizontalCenter
+            anchors.bottom: showMailToContainer.top
+            anchors.bottomMargin: 20
+
+            color: "#FAFAFA"
+
+            layer.enabled: true
+            layer.effect: DropShadow {
+
+                transparentBorder: true
+                horizontalOffset: 0
+                verticalOffset: 2
+                radius: 12.0
+                color: "#80000000"
+            }
+
+            Text {
+
+                anchors.verticalCenter: parent.verticalCenter
+                anchors.left: parent.left
+                anchors.leftMargin: 15
+
+                text: "De"
+
+                font.bold: true
+                font.pixelSize: 16
+            }
+
+            Text {
+
+                id: showMailFromContainerText
+                anchors.verticalCenter: parent.verticalCenter
+                anchors.left: parent.left
+                anchors.leftMargin: 50
+
+
+                color: "#37474F"
+
+                font.pixelSize: 16
+            }
+        }
+
+        Rectangle {
+            id: showMailToContainer
+
+            width: parent.width - 100
+            height: 50
+
+            radius: 5
+            anchors.horizontalCenter: parent.horizontalCenter
+            anchors.bottom: showMailSubjectContainer.top
+            anchors.bottomMargin: 20
+
+            color: "#FAFAFA"
+
+            layer.enabled: true
+            layer.effect: DropShadow {
+
+                transparentBorder: true
+                horizontalOffset: 0
+                verticalOffset: 2
+                radius: 12.0
+                color: "#80000000"
+            }
+
+            Text {
+
+                anchors.verticalCenter: parent.verticalCenter
+                anchors.left: parent.left
+                anchors.leftMargin: 15
+
+                text: "Para"
+
+                font.bold: true
+                font.pixelSize: 16
+            }
+
+            Text {
+
+                id: showMailToContainerText
+                anchors.verticalCenter: parent.verticalCenter
+                anchors.left: parent.left
+                anchors.leftMargin: 60
+
+
+                color: "#37474F"
+
+                font.pixelSize: 16
+            }
+        }
+
+        Rectangle {
+            id: showMailSubjectContainer
+
+            width: parent.width - 100
+            height: 50
+
+            radius: 5
+            anchors.horizontalCenter: parent.horizontalCenter
+            anchors.bottom: mailContentContainer.top
+            anchors.bottomMargin: 20
+
+            color: "#FAFAFA"
+
+            layer.enabled: true
+            layer.effect: DropShadow {
+
+                transparentBorder: true
+                horizontalOffset: 0
+                verticalOffset: 2
+                radius: 12.0
+                color: "#80000000"
+            }
+
+            Text {
+
+                anchors.verticalCenter: parent.verticalCenter
+                anchors.left: parent.left
+                anchors.leftMargin: 15
+
+                text: "Asunto"
+
+                font.bold: true
+                font.pixelSize: 16
+            }
+
+            Text {
+                id: showMailSubjectContainerText
+
+                anchors.verticalCenter: parent.verticalCenter
+                anchors.left: parent.left
+                anchors.leftMargin: 80
+
+                color: "#37474F"
+
+                font.pixelSize: 16
+            }
+        }
+
+
+        Rectangle {
+            id: mailContentContainer
+
+            width: parent.width - 100
+            height: parent.height - (showMailFromContainer.height + showMailToContainer.height + showMailSubjectContainer.height + 120)
+
+            radius: 5
+            anchors.horizontalCenter: parent.horizontalCenter
+            anchors.bottom: parent.bottom
+            anchors.bottomMargin: 30
+
+            color: "#FAFAFA"
+
+            layer.enabled: true
+            layer.effect: DropShadow {
+
+                transparentBorder: true
+                horizontalOffset: 0
+                verticalOffset: 2
+                radius: 12.0
+                color: "#80000000"
+            }
+
+            Text {
+                id: showMailContentContainerText
+
+                width: parent.width - 40
+                height: parent.height - 40
+                anchors.centerIn: parent
+
+                wrapMode: Text.Wrap
+
+                color: "#37474F"
+
+                font.pixelSize: 16
+            }
+        }
+
+
+    }
 
     Rectangle {
         id: mailListContainer
@@ -568,11 +795,11 @@ Window {
 
                 Rectangle {
 
+                    id: mailListViewDelegateMainContainer
                     width: parent.width
                     height: parent.height-1
                     anchors.verticalCenter: parent.verticalCenter
                     color: "#f8f5f5"
-
                     CustomBorder {
 
                         commonBorder: false
@@ -581,6 +808,77 @@ Window {
                         tBorderwidth: 0
                         bBorderwidth: 1
                         borderColor: "#eaeaea"
+                    }
+
+                    MouseArea {
+                        id: delegateItemMouseArea
+                        anchors.fill: parent
+                        hoverEnabled: true
+                        onEntered: {
+                            trashButton.enabled = true;
+                            trashButton.visible = true;
+                            readedDot.visible = false;
+                            //mailListViewDelegateMainContainer.color = mailListView.currentIndex === index ? '#80DEEA' : "#ECEFF1"
+                            mailListViewDelegateMainContainer.color = "#ECEFF1"
+                        }
+
+                        onExited: {
+                            trashButton.enabled = false;
+                            trashButton.visible = false;
+                            readedDot.visible = true;
+                            mailListViewDelegateMainContainer.color = "#f8f5f5"
+                        }
+
+                        onClicked: {
+
+                            mailListView.currentIndex = index
+
+                            showMailFromContainerText.text = mailListModel.get(index).sender
+                            showMailToContainerText.text = mailListModel.get(index).to
+                            showMailSubjectContainerText.text = mailListModel.get(index).subject
+                            showMailContentContainerText.text = mailListModel.get(index).content
+                        }
+
+
+                        Rectangle {
+                            id: trashButton
+                            height: parent.height
+                            width: 40
+
+                            anchors.left: parent.left
+
+                            enabled: false
+                            visible: false
+
+                            color: "transparent"
+
+                            Image {
+                                id: trashImage
+                                width: parent.width - 15
+                                height: width
+                                anchors.centerIn: parent
+                                fillMode: Image.PreserveAspectFit
+                                source: trashButtonMouseArea.containsMouse ? "qrc:/img/ic_delete_opened_red_24px.svg" : "qrc:/img/ic_delete_black_24px.svg"
+                            }
+
+                            MouseArea {
+                                id: trashButtonMouseArea
+                                anchors.fill: parent
+
+                                hoverEnabled: true
+
+                                onClicked: {
+
+                                    deleteMailQMLSignal(mailListModel.get(index).ID, sortedByDate);
+
+                                    setMailsIntervalContainer.firstOfIntervalDate = new Date();
+                                    setMailsIntervalContainer.lastOfIntervalDate = new Date();
+                                    setMailsIntervalContainer.siempreSelected = true;
+                                    setMailsIntervalContainer.setMailsInterval();
+                                }
+
+                            }
+                        }
                     }
 
                     Rectangle {
@@ -594,12 +892,13 @@ Window {
                         anchors.leftMargin: 15
                     }
 
+
+
                     Rectangle {
 
                         width: 245
                         height: childrenRect.height
                         color: "transparent"
-                        //color: 'red'
                         anchors.left: readedDot.right
                         anchors.leftMargin: 15
                         anchors.verticalCenter: parent.verticalCenter
@@ -626,7 +925,6 @@ Window {
                         width: 100
                         height: childrenRect.height
                         color: "transparent"
-                        //color: 'blue'
                         anchors.right: parent.right
                         anchors.verticalCenter: parent.verticalCenter
                         anchors.rightMargin: 20
@@ -992,18 +1290,30 @@ Window {
                     borderColor: "#bcbcbc"
                 }
 
-                Text {
-                    id: mailFromLabel
-                    x: 10
-                    anchors.verticalCenter: parent.verticalCenter
-                    color: "#4b4b4b"
-                    text: qsTr("De")
-                    font.pixelSize: 12
+                Rectangle {
+
+                    height: parent.height
+                    width: 40
+
+                    anchors.left: parent.left
+
+                    color: 'white'
+
+                    z: 3
+
+                    Text {
+                        id: mailFromLabel
+                        x: 10
+                        anchors.verticalCenter: parent.verticalCenter
+                        color: "#4b4b4b"
+                        text: qsTr("De")
+                        font.pixelSize: 12
+                    }
                 }
 
                 TextInput {
                     id: mailFromTextInput
-                    leftPadding: mailFromLabel.width + 20
+                    leftPadding: mailFromLabel.width + 28
                     topPadding: 14
                     width: parent.width
                     height: parent.height
@@ -1044,18 +1354,30 @@ Window {
                     borderColor: "#bcbcbc"
                 }
 
-                Text {
-                    id: mailToLabel
-                    x: 10
-                    anchors.verticalCenter: parent.verticalCenter
-                    color: "#4b4b4b"
-                    text: qsTr("Para")
-                    font.pixelSize: 12
+                Rectangle {
+
+                    height: parent.height
+                    width: 50
+
+                    anchors.left: parent.left
+
+                    color: 'white'
+
+                    z: 3
+
+                    Text {
+                        id: mailToLabel
+                        x: 10
+                        anchors.verticalCenter: parent.verticalCenter
+                        color: "#4b4b4b"
+                        text: qsTr("Para")
+                        font.pixelSize: 12
+                    }
                 }
 
                 TextInput {
                     id: mailToTextInput
-                    leftPadding: mailToLabel.width + 20
+                    leftPadding: mailToLabel.width + 25
                     topPadding: 14
                     width: parent.width
                     height: parent.height
@@ -1096,18 +1418,30 @@ Window {
                     borderColor: "#bcbcbc"
                 }
 
-                Text {
-                    id: subjectLabel
-                    x: 10
-                    anchors.verticalCenter: parent.verticalCenter
-                    color: "#4b4b4b"
-                    text: qsTr("Asunto")
-                    font.pixelSize: 12
+                Rectangle {
+
+                    height: parent.height
+                    width: 60
+
+                    anchors.left: parent.left
+
+                    color: 'white'
+
+                    z: 3
+
+                    Text {
+                        id: subjectLabel
+                        x: 10
+                        anchors.verticalCenter: parent.verticalCenter
+                        color: "#4b4b4b"
+                        text: qsTr("Asunto")
+                        font.pixelSize: 12
+                    }
                 }
 
                 TextInput {
                     id: subjectTextInput
-                    leftPadding: subjectLabel.width + 20
+                    leftPadding: subjectLabel.width + 22
                     topPadding: 14
                     width: parent.width
                     height: parent.height
@@ -1149,6 +1483,8 @@ Window {
                 leftPadding: 10
                 topPadding: 33
                 font.pixelSize: 12
+
+                wrapMode: TextEdit.Wrap
 
 
                 selectByMouse: true

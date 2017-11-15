@@ -10,5 +10,7 @@
         <file>img/ic_arrow_back_white_24px.svg</file>
         <file>img/ic_keyboard_arrow_down_white_24px.svg</file>
         <file>img/ic_keyboard_arrow_down_bluegray_24px.svg</file>
+        <file>img/ic_delete_black_24px.svg</file>
+        <file>img/ic_delete_opened_red_24px.svg</file>
     </qresource>
 </RCC>

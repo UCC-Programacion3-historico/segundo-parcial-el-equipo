@@ -38,8 +38,12 @@ public slots:
     void searchByQueryCPPSlot(const QString &query);
     void searchBySenderCPPSlot(const QString &sender);
 
+    void deleteMailCPPSlot(const int id, const bool sortedByDate);
+
+
 signals:
     void clearListCPPSignal();
+    void clearShowMailCPPSignal();
     void addItemToListViewCPPSignal(QVariant id, QVariant from, QVariant to,
                                QVariant date, QVariant subject, QVariant content, QVariant isRead);
 };
